@@ -1,0 +1,11 @@
+
+
+<%- include('partials/header1'), {pathPart} %>
+<%- include('partials/gallery/gallerydetails', {galleryDetails}) %> 
+
+<!-- You can still pass 'body' content to layout.ejs -->
+<%- include('layout', { 
+    title: seoDetails?.title, 
+    body: body  // Inject dynamic body content here
+}) %>
+<%- include('partials/footer') %>

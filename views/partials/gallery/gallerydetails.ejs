@@ -1,0 +1,57 @@
+<!-- Breadcrumb Area  -->
+<style>
+    .gal {
+	
+	
+	-webkit-column-count: 3; /* Chrome, Safari, Opera */
+    -moz-column-count: 3; /* Firefox */
+    column-count: 3;
+	  
+	
+	}	
+	.gal img{ width: 100%; padding: 7px 0;}
+@media (max-width: 500px) {
+		
+		.gal {
+	
+	
+	-webkit-column-count: 1; /* Chrome, Safari, Opera */
+    -moz-column-count: 1; /* Firefox */
+    column-count: 1;
+	  
+	
+	}
+		
+	}
+</style>
+<div class="breadcrumb-area mt-50 mb-50">
+    <div class="container">
+        <div class="row">
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="/">Home</a></li>                          
+                    <li class="breadcrumb-item"><a href="gallery">Gallery</a></li>                          
+                    <li class="breadcrumb-item active" aria-current="page">Details</li>
+                </ol> 
+            </nav>
+        </div>
+    </div>
+</div>
+<div class="project-section section-padding pt-60">
+<div class="container"> 
+<div class="row clearfix">
+    <!-- Left Column -->
+    <div class="left-column col-lg-12 col-md-12 col-sm-12"> 
+        <div id="room-full-detailsd">
+            <div class="gal" id="gallery-images-container">
+                <% galleryDetails?.forEach(image => { %>
+                    <div class="image">
+                        <a class="lightbox-image" href="<%= process.env.S3_BASE_URL + image %>"> <img src="<%= process.env.S3_BASE_URL + image %>" alt="<%= image %>"></a>
+                    </div>
+                    <% }) %>
+                </div>
+        </div>
+         
+        </div>
+</div></div>
+</div>

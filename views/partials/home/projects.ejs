@@ -1,0 +1,51 @@
+<div class="project-section section-padding pt-60">
+    <div class="container">          
+        <div class="row border-bottom">
+            <div class="col-xl-8 col-lg-8 col-md-7">
+                <div class="section-title text-up">
+                    <div>
+                        <h2>Projects <span></span></h2>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xl-4 col-lg-4 col-md-5 text-start">
+                <div class="p-animation">
+                    <p>As the complexity of buildings to increase, the field of architecture became multi-disciplinary.</p>
+                </div>
+            </div>
+        </div>  
+        <div id="project-masonry" class="project-masonry-standard" data-scroll-index="2">
+            <div class="container">           
+                <div class="row text-lg-end mt-30">
+                    <ul id="menu-filter" class="project-menu mb-0">
+                        <li class="list-inline-item">
+                            <a class="active" data-filter="*">Show All</a>
+                        </li>
+                        <% projectType.forEach(item => { %>
+                        <li class="list-inline-item">
+                            <a class="" data-filter=".<%= item._id %>"><%= item.name %></a>
+                        </li>
+                        <% }) %> 
+                    </ul>
+                </div>
+                <div class="row project-filter mt-30">
+                    <% projects.forEach(item => { %>
+                    <div class="col-lg-4 col-md-6 project-item <%= item.projectType._id %> interior">
+                        <a href="project-details?slug=<%= item?.seoDetails?.slug %>" class="img-zoom">
+                            <div class="project-box">
+                                <div class="project-img">
+                                    <img src="<%= process.env.S3_BASE_URL + item.image %>" class="img-fluid mx-auto d-block" alt="" >
+                                </div>
+                                <div class="project-title">
+                                    <h3><%= item.title %></h3>
+                                    <h6><%= item.subTitle %></h6>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                    <% }) %>
+                </div>
+            </div>
+        </div>
+    </div>
+ </div>

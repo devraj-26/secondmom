@@ -1,0 +1,379 @@
+<!doctype html>
+<html lang="en">
+
+
+
+<meta http-equiv="content-type" content="text/html;charset=utf-8" /><!-- /Added by HTTrack -->
+
+<head>
+    <!-- prettier-ignore -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <title><%= seoDetails?.title %></title>
+    <meta name="description" content="<%= seoDetails?.metaDescription %>"> 
+       <script src="assets/js/vendors/color-modes.js"></script>
+    <!-- Favicon icon-->
+    <link rel="shortcut icon" type="image/x-icon" href="assets/imgs/template/logo2.png">
+    <!-- Libs CSS -->
+    <link rel="stylesheet" href="assets/css/vendors/bootstrap.min.css">
+    <link rel="stylesheet" href="assets/css/vendors/swiper-bundle.min.css">
+    <link rel="stylesheet" href="assets/css/vendors/aos.css">
+    <link rel="stylesheet" href="assets/css/vendors/odometer.css">
+    <link rel="stylesheet" href="assets/css/vendors/carouselTicker.css">
+    <link rel="stylesheet" href="assets/css/vendors/magnific-popup.css">
+    <link rel="stylesheet" href="assets/fonts/bootstrap-icons/bootstrap-icons.min.css">
+    <link rel="stylesheet" href="assets/fonts/boxicons/boxicons.min.css">
+    <link rel="stylesheet" href="assets/fonts/satoshi/satoshi.css">
+    <!-- Main CSS -->
+    <link rel="stylesheet" href="assets/css/main.css">
+
+    
+</head>
+
+<body>
+    <!-- prettier-ignore -->
+    <!--Preloader-->
+    <div id="preloader">
+        <div id="loader" class="loader">
+            <div class="loader-container text-centẻ">
+                <div class="loader-icon">
+                    <img src="assets/imgs/template/logo2.png" alt="Preloader">
+                    <p>Loading...</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--Preloader-end -->
+<!--  -->
+    <!-- Navbar -->
+    <header>
+        <nav class="navbar navbar-expand-lg navbar-light w-100 z-999">
+            <div class="container">
+                <a class="navbar-brand d-flex main-logo align-items-center" href="/">
+                    <img src="assets/imgs/template/logo1.png" alt="infinia">
+                    <span style="margin-left: 1px;">Technolitics</span>
+                </a>
+                <div class="d-none d-lg-flex">
+                    <ul class="navbar-nav mx-auto gap-4 align-items-lg-center">
+                        
+                        
+                        
+                        
+
+                        <li class="nav-item">
+                            <a class="nav-link fw-bold d-flex align-items-center" href="/">Home</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link fw-bold d-flex align-items-center" href="blogs">Blogs</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link fw-bold d-flex align-items-center" href="portfolio">Portfolio</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link fw-bold d-flex align-items-center" href="gallery">Gallery</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link fw-bold d-flex align-items-center" href="bookservice">Book A Service</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link fw-bold d-flex align-items-center" href="career">Career</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link fw-bold d-flex align-items-center" href="contact">Contact</a>
+                        </li>
+
+                    </ul>
+                </div>
+                <div class="d-flex align-items-center pe-5 pe-lg-0 me-5 me-lg-0">
+                    <a href="javascript:void(0)" data-bs-toggle="offcanvas" data-bs-target=".offcanvasTop">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                            <path class="stroke-dark"
+                                d="M19.25 19.25L15.5 15.5M4.75 11C4.75 7.54822 7.54822 4.75 11 4.75C14.4518 4.75 17.25 7.54822 17.25 11C17.25 14.4518 14.4518 17.25 11 17.25C7.54822 17.25 4.75 14.4518 4.75 11Z"
+                                stroke="black" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                        </svg>
+                    </a>
+                    <div
+                        class="dark-light-switcher d-flex justify-content-center align-items-center icon-shape icon-md border bg-white rounded-3 ms-3 me-md-3 me-0">
+                        <i class="bi theme-icon bi-sun-fill"></i>
+                        <i class="bi theme-icon bi-moon-stars-fill"></i>
+                    </div>
+                    <a href="bookservice" class="btn btn-gradient d-none d-md-block">
+                        Join For Free Trial
+                    </a>
+                    <div class="burger-icon burger-icon-white border rounded-3">
+                        <span class="burger-icon-top"></span>
+                        <span class="burger-icon-mid"></span>
+                        <span class="burger-icon-bottom"></span>
+                    </div>
+                </div>
+            </div>
+        </nav>
+        <!-- offCanvas-menu -->
+        <div class="offCanvas__info">
+            <div class="offCanvas__close-icon menu-close">
+                <button><i class="far fa-window-close"></i></button>
+            </div>
+            <div class="offCanvas__logo mb-30">
+                <a href="index.html"><img src="assets/imgs/logo/logo-dark.svg" alt="Logo" /></a>
+            </div>
+            <div class="offCanvas__side-info mb-30">
+                <div class="contact-list mb-30">
+                    <h4>Chat with us</h4>
+                    <p class="mb-3">
+                        The support team is always<br />
+                        available 24/7
+                    </p>
+                    <div class="d-flex mb-2">
+                        <img src="assets/imgs/contact-2/icon-1.svg" alt="infinia" />
+                        <a class="ms-2 text-decoration-underline text-900 fs-7" href="#">Chat via Whatsapp</a>
+                    </div>
+                    <div class="d-flex mb-2">
+                        <img src="assets/imgs/contact-2/icon-2.svg" alt="infinia" />
+                        <a class="ms-2 text-decoration-underline text-900 fs-7" href="#">Chat via Viber</a>
+                    </div>
+                    <div class="d-flex mb-2 mb-5">
+                        <img src="assets/imgs/contact-2/icon-3.svg" alt="infinia" />
+                        <a class="ms-2 text-decoration-underline text-900 fs-7" href="#">Chat via Messager</a>
+                    </div>
+                </div>
+                <div class="contact-list mb-30">
+                    <h4>Office Address</h4>
+                    <p>
+                        123/A, Miranda City Likaoli <br />
+                        Prikano, Dope
+                    </p>
+                </div>
+                <div class="contact-list mb-30">
+                    <h4>Phone Number</h4>
+                    <p>(+01) 234 567 89</p>
+                    <p>(+01) 456 789 21</p>
+                </div>
+                <div class="contact-list mb-30">
+                    <h4>Business Emails</h4>
+                    <p><a href="mailto:contact@alithemes.com">contact@alithemes.com</a></p>
+                    <p><a href="mailto:sale@alithemes.com ">sale@alithemes.com </a></p>
+                </div>
+                <div class="contact-list mb-30">
+                    <h4>Help & support</h4>
+                    <p>Email <a href="mailto:support@alithemes.com">support@alithemes.com</a> For help with a current
+                        product or service or refer to FAQs and developer tools.</p>
+                </div>
+            </div>
+            <div class="offCanvas__social-icon mt-30">
+                <a href="javascript:void(0)"><i class="fab fa-facebook-f"></i></a>
+                <a href="javascript:void(0)"><i class="fab fa-twitter"></i></a>
+                <a href="javascript:void(0)"><i class="fab fa-google-plus-g"></i></a>
+                <a href="javascript:void(0)"><i class="fab fa-instagram"></i></a>
+            </div>
+        </div>
+        <div class="offCanvas__overly"></div>
+        <!-- Offcanvas search -->
+        <div class="offcanvas offcanvas-top offcanvasTop h-50" tabindex="-1">
+            <div class="offcanvas-header">
+                <button class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+            </div>
+            <div class="offcanvas-body">
+                <div class="container">
+                    <div class="row py-md-5 py-2">
+                        <div class="col-12 col-lg-8 mx-auto">
+                            <h4 class="mb-2 fs-sm-5">What are you looking for?</h4>
+                            <p class="text-500 fs-6 mb-5">Explore our services and discover how we can help you achieve
+                                your goals</p>
+                            <div class="input-group" data-aos="zoom-in">
+                                <input type="text" class="form-control ps-5 rounded-start-pill" name="name"
+                                    placeholder="Enter Your Keywords" />
+                                <button class="btn btn-primary rounded-end-pill">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                                        fill="none">
+                                        <path
+                                            d="M19.25 19.25L15.5 15.5M4.75 11C4.75 7.54822 7.54822 4.75 11 4.75C14.4518 4.75 17.25 7.54822 17.25 11C17.25 14.4518 14.4518 17.25 11 17.25C7.54822 17.25 4.75 14.4518 4.75 11Z"
+                                            stroke="white" stroke-width="1.5" stroke-linecap="round"
+                                            stroke-linejoin="round" />
+                                    </svg>
+                                </button>
+                            </div>
+                            <div class="d-flex flex-column flex-lg-row mt-5">
+                                <h6 class="d-inline me-2">Suggest:</h6>
+                                <div class="d-flex flex-wrap gap-2">
+                                    <a href="#">Startup</a>
+                                    <a href="#">Agency</a>
+                                    <a href="#">Creative</a>
+                                    <a href="#">Consulting</a>
+                                    <a href="#">IT services</a>
+                                    <a href="#">Pricing</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Offcanvas search -->
+
+        <div class="mobile-header-active mobile-header-wrapper-style perfect-scrollbar button-bg-2">
+            <div class="mobile-header-wrapper-inner">
+                <div class="mobile-header-logo">
+                    <a class="navbar-brand d-flex main-logo align-items-center" href="index.html">
+                        <img src="assets/imgs/template/favicon.svg" alt="infinia">
+                        <span>Infinia</span>
+                    </a>
+                    <div class="burger-icon burger-icon-white border rounded-3">
+                        <span class="burger-icon-top"></span>
+                        <span class="burger-icon-mid"></span>
+                        <span class="burger-icon-bottom"></span>
+                    </div>
+                </div>
+
+                <div class="mobile-header-content-area">
+                    <div class="perfect-scroll">
+                        <div class="mobile-menu-wrap mobile-header-border">
+                            <nav>
+                                <ul class="mobile-menu font-heading ps-0">
+                                    <li class="has-children">
+                                        <a class="active" href="#">Homepages</a>
+                                        <ul class="sub-menu">
+                                            <li><a href="index.html">Home 1 - Business Startup</a></li>
+                                            <li><a href="index-2">Home 2 - Application Landing</a></li>
+                                            <li><a href="index-3">Home 3 - Marketing Services</a></li>
+                                            <li><a href="index-4">Home 4 - IT Services</a></li>
+                                            <li><a href="index-5">Home 5 - Consulting Services</a></li>
+                                        </ul>
+                                    </li>
+                                    <li class="has-children">
+                                        <a href="#">About Us</a>
+                                        <ul class="sub-menu">
+                                            <li><a href="page-about">About us v.1</a></li>
+                                            <li><a href="page-about-2">About us v.2</a></li>
+                                            <li><a href="page-about-3">About us v.3</a></li>
+                                        </ul>
+                                    </li>
+
+                                    <li class="has-children">
+                                        <a href="#">Our Services</a>
+                                        <ul class="sub-menu">
+                                            <li><a href="page-services-1">Services v.1</a></li>
+                                            <li><a href="page-services-2">Services v.2</a></li>
+                                            <li><a href="page-services-3">Services v.3</a></li>
+                                            <li><a href="page-services-details-1">Services details v.1</a></li>
+                                            <li><a href="page-services-details-2">Services details v.2</a></li>
+                                        </ul>
+                                    </li>
+
+                                    <li class="has-children">
+                                        <a href="#">Our Team</a>
+                                        <ul class="sub-menu">
+                                            <li><a href="page-team-1">Our team v.1</a></li>
+                                            <li><a href="page-team-2">Our team v.2</a></li>
+                                            <li><a href="page-team-3">Our team v.3</a></li>
+                                            <li><a href="page-team-4">Our team v.4</a></li>
+                                            <li><a href="page-team-5">Our team v.5</a></li>
+                                            <li><a href="page-team-6">Our team v.6</a></li>
+                                            <li><a href="page-team-detail-1">Team detail v.1</a></li>
+                                            <li><a href="page-team-detail-2">Team detail v.2</a></li>
+                                        </ul>
+                                    </li>
+
+                                    <li class="has-children">
+                                        <a href="#">Features</a>
+                                        <ul class="sub-menu">
+                                            <li><a href="page-features-1">Features v.1</a></li>
+                                            <li><a href="page-features-2">Features v.2</a></li>
+                                        </ul>
+                                    </li>
+
+                                    <li class="has-children">
+                                        <a href="#">Pricing</a>
+                                        <ul class="sub-menu">
+                                            <li><a href="page-pricing-01">Pricing v.1</a></li>
+                                            <li><a href="page-pricing-02">Pricing v.2</a></li>
+                                        </ul>
+                                    </li>
+
+                                    <li class="has-children">
+                                        <a href="#">Contact Us</a>
+                                        <ul class="sub-menu">
+                                            <li><a href="page-contact-1">Contact v.1</a></li>
+                                            <li><a href="page-contact-2">Contact v.2</a></li>
+                                            <li><a href="page-contact-3">Contact v.3</a></li>
+                                        </ul>
+                                    </li>
+
+                                    <li class="has-children">
+                                        <a href="#">Blog & News</a>
+                                        <ul class="sub-menu">
+                                            <li><a href="page-blog-1">Blog v.1</a></li>
+                                            <li><a href="page-blog-2">Blog v.2</a></li>
+                                            <li><a href="page-blog-details">Blog details</a></li>
+                                        </ul>
+                                    </li>
+
+                                    <li class="has-children">
+                                        <a href="#">Case Study</a>
+                                        <ul class="sub-menu">
+                                            <li><a href="page-case-study">Case Study</a></li>
+                                            <li><a href="page-case-study-details">Case study details</a></li>
+                                        </ul>
+                                    </li>
+
+                                    <li class="has-children">
+                                        <a href="#">Authentication</a>
+                                        <ul class="sub-menu">
+                                            <li><a href="page-register">Register</a></li>
+                                            <li><a href="page-login">Sign in</a></li>
+                                        </ul>
+                                    </li>
+
+                                    <li class="has-children">
+                                        <a href="#">Utilities</a>
+                                        <ul class="sub-menu">
+                                            <li><a href="page-work-process">Work Process</a></li>
+                                            <li><a href="page-book-a-demo">Book a demo</a></li>
+                                            <li><a href="page-integration">Integration</a></li>
+                                            <li><a href="page-changelog">Change log</a></li>
+                                            <li><a href="page-privacy-policy">Privacy policy</a></li>
+                                            <li><a href="page-terms-conditions">Terms conditions</a></li>
+                                            <li><a href="page-comming-soon">Comming soon</a></li>
+                                            <li><a href="page-404">Error 404</a></li>
+                                        </ul>
+                                    </li>
+
+                                    <li class="has-children">
+                                        <a href="#">Style Guide</a>
+                                        <ul class="sub-menu">
+                                            <li><a href="page-style-guide">Color & Typography</a></li>
+                                            <li><a href="page-elements">Basic elements</a></li>
+                                        </ul>
+                                    </li>
+
+                                    <li class="has-children">
+                                        <a href="#">All Sections</a>
+                                        <ul class="sub-menu">
+                                            <li><a href="section-navigation"> Navigation </a></li>
+                                            <li><a href="section-hero"> Hero </a></li>
+                                            <li><a href="section-logo-cloud"> Logo cloud </a></li>
+                                            <li><a href="section-cta"> Call to action </a></li>
+                                            <li><a href="section-how-it-work"> How it work </a></li>
+                                            <li><a href="section-services"> Services </a></li>
+                                            <li><a href="section-team"> Team </a></li>
+                                            <li><a href="section-pricing"> Pricing </a></li>
+                                            <li><a href="section-faqs"> FAQS </a></li>
+                                            <li><a href="section-testimonial"> Testimonials </a></li>
+                                            <li><a href="section-blog"> Blog </a></li>
+                                            <li><a href="section-newsletter"> Newsletter </a></li>
+                                            <li><a href="section-footer"> Footer </a></li>
+                                            <li><a href="section-features"> Features </a></li>
+                                            <li><a href="section-projects"> Projects </a></li>
+                                            <li><a href="section-contact"> Contact </a></li>
+                                            <li><a href="section-static"> Static </a></li>
+                                        </ul>
+                                    </li>
+                                </ul>
+                            </nav>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </header>

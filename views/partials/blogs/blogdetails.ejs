@@ -1,0 +1,565 @@
+<link rel="stylesheet" href="/assets/css/mgnfc.css">
+<!-- Swiper CSS -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.css"/>
+<br>
+<style>
+    /* Custom Lightbox Styles */
+    .custom-lightbox {
+        position: fixed;
+        top: 5%;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.9);
+        display: none;
+        align-items: center;
+        justify-content: center;
+        z-index: 9999;
+        flex-direction: column;
+    }
+
+    .lightbox-content {
+        position: relative;
+        text-align: center;
+    }
+
+    .lightbox-image {
+        max-width: 80%;
+        height: 600px !important;
+        border-radius: 8px;
+        object-fit: contain;
+    }
+
+    .lightbox-counter {
+        position: absolute;
+        bottom: 10px;
+        right: 20px;
+        color: white;
+        font-size: 14px;
+    }
+
+    .lightbox-close {
+        position: absolute;
+        top: 20px;
+        right: 20px;
+        font-size: 30px;
+        color: white;
+        background: transparent;
+        border: none;
+        cursor: pointer;
+        padding: 10px 15px;
+        border-radius: 50%;
+        line-height: 1;
+        z-index: 99999;
+    }
+
+    .lightbox-close:hover {
+        background: transparent;
+    }
+
+    .lightbox-nav {
+        font-size: 30px;
+        color: #fff;
+        background: rgba(0, 0, 0, 0.5);
+        border: none;
+        cursor: pointer;
+        padding: 10px 15px;
+        border-radius: 50%;
+        line-height: 1;
+        transition: background 0.3s ease;
+        z-index: 99999;
+    }
+
+    .lightbox-nav:hover {
+        background: rgba(255, 255, 255, 0.3);
+    }
+
+    .lightbox-controls {
+        position: fixed;
+        top: 50%;
+        left: 0;
+        right: 0;
+        transform: translateY(-50%);
+        display: flex;
+        justify-content: space-between;
+        pointer-events: none;
+        padding: 0 20px;
+    }
+
+    .lightbox-prev, .lightbox-next {
+        pointer-events: auto;
+    }
+
+    .lightbox-loading {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        display: none;
+    }
+
+    .lightbox-loading:after {
+        content: '';
+        display: block;
+        width: 40px;
+        height: 40px;
+        border: 3px solid #fff;
+        border-top-color: transparent;
+        border-radius: 50%;
+        animation: spin 1s linear infinite;
+    }
+
+    @keyframes spin {
+        to { transform: rotate(360deg); }
+    }
+
+    /* Swiper Styles (replicated from earlier example) */
+    .swiper-container {
+        width: 80%;
+        padding: 40px 0;
+        overflow: hidden;
+        margin: 0 auto;
+    }
+
+    .swiper-slide {
+        transition: transform 0.3s ease, opacity 0.3s ease;
+        border-radius: 20px;
+        overflow: hidden;
+        max-width: 80%;
+    }
+
+    .swiper-slide-active img {
+        transform: scale(1);
+        filter: none;
+        opacity: 1;
+    }
+
+    .swiper-slide-prev img,
+    .swiper-slide-next img {
+        transform: scale(0.94);
+        opacity: 0.8;
+    }
+
+    .swiper-slide img {
+        width: 100%;
+        border-radius: 20px;
+        transition: all 0.3s ease-in-out;
+    }
+</style>
+
+<main>
+    <section style="justify-content: center;">
+        <div class="container mt-10" style="margin-top: 20px;">
+            <div class="row">
+                <div class="col-md-10 mx-auto" style="justify-content: center;">
+                    <div class="d-flex gap-2">
+                        <!-- <a href="#" class="bg-primary-soft rounded-pill px-3 fw-bold py-2 text-primary text-uppercase fs-7">Business</a> -->
+                        <!-- <a href="#" class="bg-primary-soft rounded-pill px-3 fw-bold py-2 text-primary text-uppercase fs-7">mARKETING</a> -->
+                    </div>
+                    <h5 class="ds-5 mt-3 mb-4"><%= blogDetails.title %></h5>
+                    <p style="line-height: 2;">
+                        <%- blogDetails?.description %>
+                    </p>
+                    <div class="d-flex align-items-center justify-content-between mt-7 py-3 border-top"></div>
+                </div>
+
+                <% if (blogDetails?.multipleDescriptions?.length > 0) { %>
+                    <% blogDetails.multipleDescriptions.forEach(item => { %>
+                        <div class="col-md-10 mx-auto">
+                            <div class="image-frame">
+                                <% if (item?.singleImage?.image) { %>
+                                    <!-- Image link with custom lightbox -->
+                                    <a href="<%= process.env.S3_BASE_URL + item.singleImage.image %>" class="lightbox-image-link">
+                                        <img class="rounded-4 w-100 image-frame" src="<%= process.env.S3_BASE_URL + item.singleImage.image %>" alt="Image">
+                                    </a>
+                                <% } %>
+                                <style>
+                                    .image-frame {
+                                        width: 100%;
+                                        margin-left: auto;
+                                        margin-right: auto;
+                                        margin-top: 15px;
+                                        margin-bottom: 15px;
+                                    }
+                                    .image-frame img {
+                                        width: 100%;
+                                        height: auto;
+                                        display: block;
+                                    }
+                                </style>
+                            </div>
+                            <p><%- item.description %></p>
+                        </div>
+
+                        <% if (item?.multipleImages?.length > 0) { %>
+                            <div class="col-md-10 mx-auto my-7">
+                                <!-- Swiper layout container (replacing Masonry) -->
+                                <div class="swiper-container">
+                                    <div class="swiper-wrapper">
+                                        <% item.multipleImages.forEach(image => { %>
+                                            <div class="swiper-slide">
+                                                <a href="<%= process.env.S3_BASE_URL + image %>" class="lightbox-image-link">
+                                                    <img class="rounded-4" src="<%= process.env.S3_BASE_URL + image %>" alt="infinia">
+                                                </a>
+                                            </div>
+                                        <% }) %>
+                                    </div>
+                                </div>
+                            </div>
+                        <% } %>
+
+                        <div class="col-md-10 mx-auto">
+                            <% if (item?.button && item?.button?.hyperLink !== "" && item?.button?.title !== "") { %>
+                                <div class="row mt-5 wow img-custom-anim-left d-flex justify-content-center align-items-center">
+                                    <div class="col-12 text-center" style="margin-bottom: 20px; margin-top: 10px;">
+                                        <a href="<%= item?.button?.hyperLink %>" target="_blank" class="thm-btn">
+                                            <button type="submit" class="btn btn-primary mt-3">
+                                                <%= item?.button?.title %>
+                                            </button>
+                                        </a>
+                                    </div>
+                                </div>
+                            <% } %>
+
+                            <% if (
+                                (item?.facebook && item?.facebook !== "") || 
+                                (item?.twitter && item?.twitter !== "") || 
+                                (item?.instagram && item?.instagram !== "") || 
+                                (item?.youtube && item?.youtube !== "")
+                            ) { %>
+                                <div class="mt-5 py-3 border-top border-bottom text-center">
+                                    <% if (item?.youtube && item?.youtube !== "") { %>
+                                        <div class="mb-3 d-flex justify-content-center">
+                                            <iframe style="border-radius: 15px !important;"
+                                                width="100%" 
+                                                height="450" 
+                                                src="<%= item?.youtube.replace('watch?v=', 'embed/') %>" 
+                                                frameborder="0" 
+                                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                                                allowfullscreen>
+                                            </iframe>
+                                        </div>
+                                    <% } %>
+                                </div>
+                            <% } %>
+                        </div>
+                    <% }) %>
+                <% } %>
+
+                <!-- Bootstrap Icons CDN -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css">
+
+<div class="col-md-8 mx-auto">
+    <div class="share_post ul-li mb-3" style="margin-top: 10px;">
+        <div class="social_widget ul-li relative-position" style="margin-top: 30px !important;">
+            <ul style="display: flex; list-style: none; padding: 0; gap: 10px; align-items: center;">
+                <li class="h-yo">
+                    <a href="whatsapp://send?text=<%= blogDetails.title %> <%= baseUrl + currentURL %>"
+                       target="_blank" class="social-icon">
+                        <i class="bi bi-whatsapp"></i>
+                    </a>
+                </li>
+                <li class="h-fb">
+                    <a href="http://www.facebook.com/sharer.php?u=<%= baseUrl + currentURL %>"
+                       target="_blank" class="social-icon">
+                        <i class="bi bi-facebook"></i>
+                    </a>
+                </li>
+                <li class="h-tw">
+                    <a href="https://twitter.com/intent/tweet?url=<%= baseUrl + currentURL %>&text=<%= blogDetails.title %>"
+                       target="_blank" class="social-icon">
+                        <i class="bi bi-twitter"></i>
+                    </a>
+                </li>
+                <li class="h-lk">
+                    <a href="http://www.linkedin.com/shareArticle?mini=true&url=<%= baseUrl + currentURL %>"
+                       target="_blank" class="social-icon">
+                        <i class="bi bi-linkedin"></i>
+                    </a>
+                </li>
+               
+                <li class="h-cp">
+                    <a href="#" onclick="copyToClipboard(event)" class="social-icon">
+                        <i class="bi bi-clipboard"></i>
+                    </a>
+                    <span class="copy-popup">Copied!</span>
+                </li>
+            </ul>
+        </div>
+
+        <!-- CSS Styling -->
+        <style>
+            .social-icon {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                width: 50px;
+                height: 50px;
+                border: 2px solid #ccc;
+                border-radius: 50%;
+                background-color: #34327c;
+                transition: all 0.3s ease-in-out;
+                color: #fff;
+                text-decoration: none;
+                font-size: 24px;
+                position: relative;
+            }
+
+            .social-icon:hover {
+                background-color: #f1f1f1;
+                color: #000;
+            }
+
+            .social_widget ul {
+                display: flex;
+                gap: 10px;
+            }
+
+            /* Copy Popup Styling */
+            .copy-popup {
+                display: none;
+                position: absolute;
+                bottom: 60px;
+                left: 50%;
+                transform: translateX(-50%);
+                background-color: rgba(0, 0, 0, 0.8);
+                color: #fff;
+                padding: 6px 12px;
+                border-radius: 5px;
+                font-size: 14px;
+                white-space: nowrap;
+                animation: fadeOut 2s ease-in-out;
+            }
+
+            @keyframes fadeOut {
+                0% {
+                    opacity: 1;
+                }
+                50% {
+                    opacity: 1;
+                }
+                100% {
+                    opacity: 0;
+                }
+            }
+        </style>
+
+        <!-- Copy to Clipboard Script -->
+        <script>
+            function copyToClipboard(event) {
+                event.preventDefault();
+                const url = "<%= baseUrl + currentURL %>";
+                navigator.clipboard.writeText(url).then(() => {
+                    const popup = event.target.closest('.h-cp').querySelector('.copy-popup');
+                    popup.style.display = "block";
+                    setTimeout(() => {
+                        popup.style.display = "none";
+                    }, 2000);
+                }).catch(err => {
+                    console.error("Failed to copy: ", err);
+                });
+            }
+        </script>
+    </div>
+
+    <% if (blogDetails?.seoDetails?.tags?.length > 0) { %>
+        <div class="d-flex align-items-center flex-wrap tag-wrapper">
+            <p class="fw-bold text-500 mb-0 me-2">Tags:</p>
+            <div class="d-flex align-items-center flex-wrap">
+                <% blogDetails?.seoDetails?.tags?.forEach(item => { %>
+                    <a href="#"><span class="tag"><%- item %></span></a>
+                <% }) %>
+            </div>
+        </div>
+    <% } %>
+
+    <!-- CSS Fix -->
+    <style>
+        .tag-wrapper {
+            margin-top: 50px;
+            display: flex;
+            flex-wrap: nowrap;
+            align-items: center;
+            gap: 8px;
+            overflow-x: auto;
+        }
+
+        .tag {
+            display: inline-block;
+            border: 1px solid #dee2e5;
+            border-radius: 5px;
+            padding: 6px 15px;
+            margin-left: 5px;
+            color: #8199A3;
+            transition: all 300ms ease-in-out;
+            white-space: nowrap;
+        }
+
+        .tag:hover {
+            color: #fff;
+            background-color: #5659C9;
+        }
+        @media (max-width: 768px) {
+        .btn-whatsapp-pulse {
+            
+            
+        }}
+    </style>
+</div>
+
+            </div>
+        </div>
+    </section>
+</main>
+
+<!-- Swiper JS -->
+<script src="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.js"></script>
+
+<!-- Custom Lightbox HTML -->
+<div class="custom-lightbox">
+    <div class="lightbox-content">
+        <button class="lightbox-close" aria-label="Close">×</button>
+        <img class="lightbox-image" src="" alt="Lightbox Image">
+        <div class="lightbox-counter"></div>
+        <div class="lightbox-loading"></div>
+        <div class="lightbox-controls">
+            <button class="lightbox-nav lightbox-prev" aria-label="Previous">❮</button>
+            <button class="lightbox-nav lightbox-next" aria-label="Next">❯</button>
+        </div>
+    </div>
+</div>
+
+<style>
+    .swiper-container {
+    width: 100%; /* Keeps the width flexible */
+    padding: 40px 0;
+    overflow: hidden;
+    margin: 0 auto;
+}
+
+.swiper-slide img {
+    width: 100%;
+    height: 550px !important; /* Fixed height for all images */
+    object-fit: cover; /* Ensures images fill the space without stretching */
+    border-radius: 20px;
+    transition: all 0.3s ease-in-out;
+}
+
+</style>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Initialize Swiper for each swiper-container
+        document.querySelectorAll('.swiper-container').forEach((container) => {
+            new Swiper(container, {
+                loop: true,
+                slidesPerView: "auto",
+                centeredSlides: true,
+                spaceBetween: 10,
+                autoplay: {
+                    delay: 3000,
+                    disableOnInteraction: false
+                }
+            });
+        });
+
+        // Lightbox Logic
+        const lightbox = document.querySelector('.custom-lightbox');
+        const lightboxImage = lightbox.querySelector('.lightbox-image');
+        const closeBtn = lightbox.querySelector('.lightbox-close');
+        const prevBtn = lightbox.querySelector('.lightbox-prev');
+        const nextBtn = lightbox.querySelector('.lightbox-next');
+        const counter = lightbox.querySelector('.lightbox-counter');
+        const loading = lightbox.querySelector('.lightbox-loading');
+        let currentImageIndex = 0;
+        let galleryImages = [];
+
+        function showLoading() {
+            loading.style.display = 'block';
+        }
+
+        function hideLoading() {
+            loading.style.display = 'none';
+        }
+
+        function updateCounter() {
+            counter.textContent = `${currentImageIndex + 1} of ${galleryImages.length}`;
+        }
+
+        function openLightbox(imageSrc, imagesList = null) {
+            showLoading();
+            lightbox.style.display = 'flex';
+
+            const img = new Image();
+            img.onload = function() {
+                lightboxImage.src = imageSrc;
+                hideLoading();
+            };
+            img.src = imageSrc;
+
+            if (imagesList) {
+                galleryImages = imagesList;
+                currentImageIndex = galleryImages.findIndex(img => img === imageSrc);
+                updateCounter();
+                prevBtn.style.display = '';
+                nextBtn.style.display = '';
+            } else {
+                prevBtn.style.display = 'none';
+                nextBtn.style.display = 'none';
+                counter.style.display = 'none';
+            }
+        }
+
+        function closeLightbox() {
+            lightbox.style.display = 'none';
+            setTimeout(() => {
+                lightboxImage.src = '';
+            }, 300);
+        }
+
+        function navigate(direction) {
+            currentImageIndex = (currentImageIndex + direction + galleryImages.length) % galleryImages.length;
+            lightboxImage.src = galleryImages[currentImageIndex];
+            updateCounter();
+        }
+
+        // Single Image Links
+        document.querySelectorAll('.image-frame a.lightbox-image-link').forEach(link => {
+            link.addEventListener('click', (e) => {
+                e.preventDefault();
+                openLightbox(link.href);
+            });
+        });
+
+        // Swiper Gallery Images (updated from Masonry)
+        document.querySelectorAll('.swiper-container').forEach(gallery => {
+            const links = Array.from(gallery.querySelectorAll('a.lightbox-image-link'));
+            const imageUrls = links.map(link => link.href);
+
+            links.forEach(link => {
+                link.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    openLightbox(link.href, imageUrls);
+                });
+            });
+        });
+
+        // Event Listeners
+        closeBtn.addEventListener('click', closeLightbox);
+        prevBtn.addEventListener('click', () => navigate(-1));
+        nextBtn.addEventListener('click', () => navigate(1));
+        lightbox.addEventListener('click', (e) => {
+            if (e.target === lightbox) closeLightbox();
+        });
+
+        // Keyboard Navigation
+        document.addEventListener('keydown', (e) => {
+            if (lightbox.style.display === 'flex') {
+                switch(e.key) {
+                    case 'Escape': closeLightbox(); break;
+                    case 'ArrowLeft': navigate(-1); break;
+                    case 'ArrowRight': navigate(1); break;
+                }
+            }
+        });
+    });
+</script>

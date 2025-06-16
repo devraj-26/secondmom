@@ -1,0 +1,91 @@
+<head>
+  <link rel="shortcut icon" href="/assets/images/fav/favicon.ico" />
+  <meta name="robots" content="noindex">
+</head>
+
+<div class="section">
+  <div>
+    <img src="/assets/images/THANKYOU.svg" alt="Thank You">
+  </div>
+
+  <!-- <h2>Thank You for Your Submission!</h2> -->
+
+  <!-- Message Placeholder -->
+  <p id="thank-you-message">Thank you for reaching out!</p>
+
+  <a class="back-home" href="#" onclick="goBack()">Go Back</a>
+</div>
+
+<script>
+  // Function to get URL query parameters
+  function getQueryParam(param) {
+    const urlParams = new URLSearchParams(window.location.search);
+    return urlParams.get(param);
+  }
+
+  // Get formType from the URL
+  const formType = getQueryParam("formType");
+
+  // Update the message based on formType
+  const messageElement = document.getElementById("thank-you-message");
+
+  if (formType === "contact") {
+    messageElement.innerText = "We have received your contact request. Our team will reach out to you soon.";
+  } else if (formType === "book-service") {
+    messageElement.innerText = "Your service booking request is received! We’ll be in touch.";
+  } else if (formType === "website-development") {
+    messageElement.innerText = "We have received your Website Development request. Our team will reach out soon.";
+  } else if (formType === "app-development") {
+    messageElement.innerText = "We have received your App Development request. Our team will reach out soon.";
+  } else if (formType === "ecom-development") {
+    messageElement.innerText = "We have received your E-com. Development request. Our team will reach out soon.";
+  } else if (formType === "software-development") {
+    
+  } else if (formType === "career-enquiry") {
+    messageElement.innerText = "We have received your job application. Our HR team will review it and contact you soon.";
+  } else if (formType === "collaboration") {
+    messageElement.innerText = "We have received your Collaboration request. Our team will contact you soon.";
+  } else if (formType === "service-enquiry") {
+    messageElement.innerText = "Thank you for your service enquiry! We’ll provide details shortly. ";
+  }
+
+  function goBack() {
+    if (document.referrer) {
+      window.history.back(); // Go back to the previous page
+    } else {
+      window.location.href = "/"; // Redirect to homepage if no history exists
+    }
+  }
+</script>
+
+<style>
+  html, body {
+    margin: 0;
+    padding: 0;
+    text-align: center;
+    font-family: sans-serif;
+    background-color: white;
+  }
+
+  .section {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+
+  .back-home {
+    display: inline-block;
+    border: 2px solid #aa8453;
+    color: #fff;
+    text-transform: uppercase;
+    padding: 0.75rem 1rem 0.6rem;
+    background: #aa8453;
+    transition: all 0.2s linear;
+  }
+
+  .back-home:hover {
+    background: #aa8453;
+    color: #ddd;
+  }
+</style>

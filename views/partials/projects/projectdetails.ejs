@@ -1,0 +1,712 @@
+<link href="https://fonts.cdnfonts.com/css/satoshi" rel="stylesheet">
+<main>
+    <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css">
+    <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
+
+
+    <!-- prettier-ignore -->
+    <section>
+        <!-- <img class="w-100" src="/assets/imgs/blog-details/img-1.png" alt="infinia"> -->
+        <div class="container mt-10">
+            <div class="row">
+                <div class="col-md-8 mx-auto">
+                    
+                    <div class="d-flex gap-2">
+                        <a href="#"
+                            class="bg-primary-soft rounded-pill px-3 fw-bold py-2 text-primary text-uppercase fs-7">
+                            <%=projectDetails.year%>
+                        </a>
+                    </div>
+                    <h1 class="ds-5 mt-3 mb-4">
+                        <%=projectDetails.title%>
+                    </h1>
+                    <p class="fs-5 text-900 mb-0">
+                        <%=projectDetails.subTitle%>
+                    </p>
+
+
+                    <div class="d-flex align-items-center justify-content-between mt-7 py-3 border-top border-bottom">
+                        <div class="d-flex align-items-center position-relative z-1">
+
+                            <div class="ms-3">
+                                <h6 class="fs-6 m-1">Industry</h6>
+                                <p class="mb-0 fs-6 ms-1" style="color: #aeaeae;">
+                                    <%=projectDetails.location%>
+                                </p>
+                            </div>
+                            <a href="#" class="position-absolute bottom-0 start-0 end-0 top-0 z-0"></a>
+                        </div>
+                        <div class="ms-3">
+                            <h6 class="fs-6 m-1">Project For</h6>
+                            <p class="mb-0 fs-6 ms-1" style="color: #aeaeae;">
+                                <%=projectDetails.projectFor%>
+                            </p>
+                        </div>
+                        <div class="ms-3">
+                            <h6 class="fs-6 m-1">Year Of Development</h6>
+                            <p class="mb-0 fs-7 ms-1" style="color: #aeaeae;">
+                                <%=projectDetails.year%>
+                            </p>
+                        </div>
+
+                        <div class="d-flex align-items-center">
+                            <a href="<%=projectDetails.hyperLink%>"
+                                class="bg-primary-soft rounded-pill px-3 fw-bold py-2 text-primary  fs-7" target="_blank">Click
+                                to View</a>
+
+                        </div>
+                    </div>
+
+
+                </div>
+                <!-- <div class="col-md-10 mx-auto my-7">
+                        <img class="rounded-4" src="assets/imgs/blog-details/img-2.png" alt="infinia">
+                    </div> -->
+                
+<!-- Include Magnific Popup CSS -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/magnific-popup.js/1.1.0/magnific-popup.min.css">
+
+<!-- Include Magnific Popup JS -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/magnific-popup.js/1.1.0/jquery.magnific-popup.min.js"></script>
+
+<!-- multiple images -->
+<% if (projectDetails?.multipleDescriptions?.length > 0) { %>
+    <% projectDetails.multipleDescriptions.forEach(item => { %>
+       
+<!-- single image -->
+        <% if (item?.singleImage?.image) { %>
+            
+            <img class="image-frame" src="<%= process.env.S3_BASE_URL + item.singleImage.image %>" alt="Image">
+        <% } %>
+        
+        <style>
+ .image-frame {
+    width: 80%;                
+    margin-left: auto;          
+    margin-right: auto;         
+    margin-top: 15px;           
+    margin-bottom: 15px;        
+    display: block;            /* Ensure it behaves as a block element */
+    border-radius: 50px;       /* Apply border-radius directly */
+}
+
+
+.image-frame img {
+    width: 100%;               /* Make the image fill the frame width */
+    height: auto;              /* Keep the height auto to maintain aspect ratio */
+    display: block;            /* Remove any unwanted space below the image */
+    border-radius: 0px;       /* Apply border-radius to the image */
+}
+
+        </style>
+        <!-- single image end -->
+         
+        
+        <!--Multiple description  -->
+        <div class="col-md-8 mx-auto mt-5">
+            <p class="fw-bold text-900">
+                <span class="fw-medium text-600">
+                    <%= item.description ? item.description.replace(/<\/?[^>]+(>|$)/g, "") : '' %>
+                </span>
+            </p>
+        </div>
+        <!-- Multiple Description end -->
+
+        <% if (item?.images?.length > 0) { %>
+
+            <!-- Flexbox Layout for Masonry -->
+            <div class="masonry-grid">
+                <% item.images.forEach(image => { %>
+                    <div class="masonry-item">
+                        <!-- Image link with Magnific Popup -->
+                        <a href="<%= process.env.S3_BASE_URL + image %>" class="popup-image">
+                            <img class="rounded-4 w-100 " style="height: 700px; object-fit: cover;" src="<%= process.env.S3_BASE_URL + image %>" alt="infinia">
+                        </a>
+                    </div>
+                <% }) %>
+            </div>
+
+
+            
+        <% } %>
+    <% }) %>
+<% } %>
+<!-- multiple images end -->
+
+<!-- Initialize Magnific Popup -->
+<script>
+    $(document).ready(function() {
+        // Initialize Magnific Popup
+        $('.popup-image').magnificPopup({
+            type: 'image',
+            gallery: {
+                enabled: true
+            },
+            mainClass: 'mfp-fade', // Optional fade effect
+        });
+    });
+</script>
+
+<style>
+    .masonry-grid {
+    display: flex;
+    flex-direction: column; /* Stack items in a single column */
+    gap: 10px; /* Adjust the gap between images */
+    max-width: 1035px; /* Limit the width to 1035px */
+    margin: 0 auto; /* Center the grid */
+}
+
+.masonry-item {
+    width: 100%; /* Ensure each item takes full width */
+}
+
+.masonry-item img {
+    width: 100%; /* Make images take up full width */
+    height: auto;
+    object-fit: cover; /* Ensure images maintain aspect ratio */
+    display: block;
+    border-radius: 12px; /* Optional: Apply rounded corners */
+}
+
+</style>
+
+
+<!-- <% if (projectDetails?.multipleDescriptions.length > 0) { %> 
+    <% projectDetails.multipleDescriptions.forEach(item => { %>   
+<%console.log("nknknc=",item.image)%>
+<div class="image-frame">
+    <img src="<%= process.env.S3_BASE_URL + item.image %>" alt="Project Image">
+</div>
+
+<% }) %>
+<% } %>
+
+<style>.image-frame {
+    width: 80%;                /* Set image width to 80% */
+    margin-left: auto;         /* Center the image horizontally */
+    margin-right: auto;        /* Center the image horizontally */
+    margin-top: 15px;          /* Optional: add top margin */
+    margin-bottom: 15px;       /* Optional: add bottom margin */
+}
+
+.image-frame img {
+    width: 100%;               /* Make the image fill the frame width */
+    height: auto;              /* Keep the height auto to maintain aspect ratio */
+    display: block;            /* Remove any unwanted space below the image */
+}
+</style>
+ -->
+
+
+                    <div class="col-md-8 mx-auto">
+                       
+                        <div class="bg-primary-light position-relative m-lg-7 rounded-4 text-center">
+                            <svg class="mt-7" xmlns="http://www.w3.org/2000/svg" width="52" height="52"
+                                viewBox="0 0 52 52" fill="none">
+                                <g clip-path="url(#clip0_617_33458)">
+                                    <path
+                                        d="M0 29.7142H11.1428L3.71422 44.5712H14.8571L22.2857 29.7142V7.42847H0V29.7142Z"
+                                        fill="white" />
+                                    <path
+                                        d="M29.7109 7.42822V29.7139H40.8538L33.4252 44.571H44.568L51.9966 29.7139V7.42822H29.7109Z"
+                                        fill="white" />
+                                </g>
+                                <defs>
+                                    <clipPath>
+                                        <rect width="52" height="52" fill="white" />
+                                    </clipPath>
+                                </defs>
+                            </svg>
+                            <blockquote class="mt-6 px-lg-0 px-5">
+                                
+                                <h5 style=" color: white; font-size: 30px; margin-left: 50px; margin-right: 50px;">
+                                    <%=projectDetails.description%>
+                                </h5>
+                                
+                            </blockquote>
+
+                            <div class="d-inline-flex align-items-center mt-5 mb-8">
+                                <img class="avatar-lg" src="/assets/imgs/testimonial-1/avatar-3.png" alt="infinia">
+                                <div class="d-flex flex-column">
+                                    <h6 class="ms-3 fs-6 mb-0 text-white">Sarah Thompson</h6>
+                                    
+                                </div>
+                            </div>
+                            <img class="position-absolute top-0 end-0 z-0" src="/assets/imgs/blog-details/bg-line.png"
+                                alt="infinia">
+                        </div>
+
+                        
+                        <!-- <div
+                            class="d-flex align-items-center justify-content-between mt-5 py-3 border-top border-bottom"> -->
+                            
+
+                            <!-- <div class="d-lg-flex align-items-center">
+                                <p class="fw-bold text-500 mb-0 me-2">Social network:</p>
+                                <div class="d-flex social-icons">
+                                    <a href="https://www.facebook.com/"
+                                        class=" text-900 border border-end-0  border-opacity-10 icon-shape icon-md">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="10" height="17"
+                                            viewBox="0 0 10 17" fill="none">
+                                            <path class="fill-dark"
+                                                d="M8.84863 9.20312H6.5415V16.0938H3.46533V9.20312H0.942871V6.37305H3.46533V4.18896C3.46533 1.72803 4.94189 0.34375 7.1875 0.34375C8.26416 0.34375 9.40234 0.559082 9.40234 0.559082V2.98926H8.14111C6.91064 2.98926 6.5415 3.72754 6.5415 4.52734V6.37305H9.2793L8.84863 9.20312Z"
+                                                fill="black"></path>
+                                        </svg>
+                                    </a>
+                                    <a href="https://twitter.com/"
+                                        class=" text-900 border border-end-0  border-opacity-10 icon-shape icon-md">
+                                        <i class="bi bi-twitter-x"></i>
+                                    </a>
+                                    <a href="https://www.linkedin.com/"
+                                        class=" text-900 border  border-opacity-10 icon-shape icon-md">
+                                        <i class="bi bi-linkedin"></i>
+                                    </a>
+                                    <a href="https://www.behance.net/"
+                                        class=" text-900 border border-start-0  border-opacity-10 icon-shape icon-md">
+                                        <i class="bi bi-behance"></i>
+                                    </a>
+                                </div>
+                            </div> -->
+                        <!-- </div> -->
+
+                        
+
+                        
+                        
+                        
+                    </div>
+                    
+            </div>
+        </div>
+
+        
+    </section>
+
+    
+   
+    
+    <!-- portolio cards -->
+    <!-- portfolio cards -->
+<!-- portfolio cards -->
+<!-- <div class="container mt-4 mb-4 pt-7 border-top">
+    <div class="row" id="scrolling-container" style="display: flex; overflow: hidden; white-space: nowrap;">
+        <section id="card-wrapper">
+        <% projects.forEach(item => { %>
+        <div class="text-center col-lg-4 col-md-6 project-card <%= item.projectType._id %>" style="display: inline-block; flex-shrink: 0; margin-right: 10px;">
+            <a href="project-details?slug=<%= item.seoDetails.slug %>">
+                <div class="zoom-img position-relative mb-4 d-inline-block z-1" style="position: relative;">
+                    <div class="rounded-3 fix" style="height: 530px; overflow: hidden;">
+                        <img class="img-fluid w-100" src="<%= process.env.S3_BASE_URL + item.image %>" 
+                             alt="<%= item.title %>" style="height: 100%; object-fit: cover;">
+                    </div> -->
+                    <!-- Added card-team element -->
+                    <!-- <a href="#"
+                        class="card-team text-start rounded-3 position-absolute bottom-0 start-0 end-0 z-1 backdrop-filter w-auto p-4 m-4 hover-up"
+                        style="opacity: 0; visibility: hidden; transition: opacity 0.3s ease, visibility 0.3s ease;">
+                        <p class="fs-7 text-primary mb-1">
+                            <%= item.location %>
+                        </p>
+                        <h6>
+                            <%= item.title %>
+                        </h6>
+                        <p class="text-900">
+                            <%= item.subTitle %>
+                        </p>
+                    </a>
+                    <a href="#"
+                        class="badge text-primary bg-white-keep px-3 py-2 rounded-pill m-4 fs-7 position-absolute top-0 end-0 z-1">
+                        <%= item.year %>
+                    </a>
+                </div>
+            </a> -->
+            <!-- Additional Section Data -->
+            <!-- <div class=" text-start" style="margin-top: -20px;margin-left: 10px;">
+                <p class="fs-7 text-primary mb-1">
+                    <%= item.location %>
+                </p>
+                <h6 class="text-900">
+                    <%= item.title %>
+                </h6>
+            </div>
+        </div>
+        <% }) %>
+        </section>
+    </div>
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const container = document.querySelector('#scrolling-container'); // The container holding the cards
+        const cardWrapper = document.querySelector('#card-wrapper'); // The wrapper holding the cards
+        const scrollSpeedInMs = 20; // Time in milliseconds for each scroll step
+        const scrollDistance = 2;// Pixels to scroll per interval (increase for faster scrolling)
+
+        let scrollInterval;
+        let isHovered = false;
+
+        // Function to make the scroll effect continuous
+        function scrollLoop() {
+            if (!isHovered) {
+                // Scroll the container by a fixed distance to the left
+                container.scrollLeft += scrollDistance;
+
+                // If the container has scrolled past the total width of the content, reset the scroll position to 0
+                if (container.scrollLeft >= container.scrollWidth / 2) {
+                    container.scrollLeft = 0; // Reset to the first set of cards
+                }
+            }
+        }
+
+        // Function to start the scrolling loop
+        function startScrolling() {
+            scrollInterval = setInterval(scrollLoop, scrollSpeedInMs);
+        }
+
+        // Function to stop the scrolling loop
+        function stopScrolling() {
+            clearInterval(scrollInterval);
+        }
+
+        // Duplicate the cards inside the wrapper to create the infinite scroll illusion
+        const cards = cardWrapper.innerHTML; // Get the original cards' HTML
+        cardWrapper.innerHTML += cards; // Append the same cards to create the loop effect
+
+        // Start the scrolling loop initially
+        startScrolling();
+
+        // Pause the scrolling when hovering over any card
+        document.querySelectorAll('.zoom-img').forEach(item => {
+            item.addEventListener('mouseover', function () {
+                isHovered = true; // Pause scrolling
+                stopScrolling(); // Stop the scroll interval
+                const cardTeam = item.querySelector('.card-team');
+                if (cardTeam) {
+                    cardTeam.style.opacity = '1';
+                    cardTeam.style.visibility = 'visible';
+                }
+            });
+
+            item.addEventListener('mouseout', function () {
+                isHovered = false; // Resume scrolling
+                startScrolling(); // Restart the scroll interval
+                const cardTeam = item.querySelector('.card-team');
+                if (cardTeam) {
+                    cardTeam.style.opacity = '0';
+                    cardTeam.style.visibility = 'hidden';
+                }
+            });
+        });
+    });
+
+    // Function to apply hover effect to show and hide card-team
+    function applyHoverEffect() {
+        document.querySelectorAll('.zoom-img').forEach(item => {
+            item.addEventListener('mouseover', function () {
+                const cardTeam = item.querySelector('.card-team');
+                if (cardTeam) {
+                    cardTeam.style.opacity = '1';
+                    cardTeam.style.visibility = 'visible';
+                }
+            });
+
+            item.addEventListener('mouseout', function () {
+                const cardTeam = item.querySelector('.card-team');
+                if (cardTeam) {
+                    cardTeam.style.opacity = '0';
+                    cardTeam.style.visibility = 'hidden';
+                }
+            });
+        });
+    }
+
+    // Initial hover effect application
+    applyHoverEffect();
+
+    // Reapply hover effect after filtering
+    document.querySelectorAll('.btn-filter').forEach(tab => {
+        tab.addEventListener('click', function () {
+            // Delay reapplying hover effect to ensure DOM updates are complete
+            setTimeout(applyHoverEffect, 100);
+        });
+    });
+</script> -->
+
+
+<style>
+    .pt-120 {
+    padding-top: 0px;
+}
+</style>
+<!--Blog 4-->
+<section class="section-blog-4 pb-120 pt-120">
+    
+    <div class="container">
+        <div class="row mt-8">
+            
+            <div class="swiper slider-1 pt-2 pb-3">
+                <div class="swiper-wrapper">
+
+                    <!-- prettier-ignore -->
+                    
+
+                    <% projects.forEach(item => { %>
+                        <a href="/project-details/<%= item.seoDetails.slug %>">
+                    <div class="swiper-slide">
+                        <div class="card border-0 position-relative rounded-3 d-inline-flex card-hover shadow-2"
+                             style="height: 547px; overflow: hidden;"> <!-- Fixed height to 547px -->
+                            <!-- Full-size image -->
+                            <img class="w-100" src="<%= process.env.S3_BASE_URL + item.image %>" alt="infinia"
+                                 style="height: 547px; object-fit: cover;"> <!-- Fixed image height -->
+                    
+                            <!-- Hover card positioned above the image -->
+                            <a href="/project-details/<%= item.seoDetails.slug %>"
+                               class="card-team text-start rounded-3 position-absolute bottom-0 start-0 end-0 z-1 backdrop-filter w-auto p-4 m-4 hover-up"
+                               style="opacity: 0; visibility: hidden; transition: opacity 0.3s, visibility 0.3s; background-color: rgba(255, 255, 255, 0.9);">
+                                <p class="fs-7 text-primary mb-1">
+                                    <%= item.location %>
+                                </p>
+                                <h6>
+                                    <%= item.title %>
+                                </h6>
+                                <p class="text-900">
+                                    <%= item.subTitle %>
+                                </p>
+                            </a>
+                    
+                            <!-- Tag positioned on the top-right of the image -->
+                            <a href="/project-details/<%= item.seoDetails.slug %>"
+                               class="position-absolute z-1 m-3 bg-primary-soft border border-2 border-white d-inline-flex rounded-pill px-3 py-1"
+                               style="top: 10px; right: 10px;">
+                                <span class="tag-spacing fs-7 fw-bold text-linear-2 ms-2 text-uppercase"><%= item.year %></span>
+                            </a>
+                        </div>
+                        
+                        <div class="text-start" style="margin-top: 10px;">
+                            <p class="fs-7 text-primary mb-1">
+                                <%= item.location %>
+                            </p>
+                            <h6 class="text-900">
+                                <%= item.title %>
+                            </h6>
+                        </div>
+                    </div>
+                    </a>
+                    <% }) %>
+                    <script>
+                        // JavaScript to handle hover effect
+                        document.addEventListener('DOMContentLoaded', () => {
+                            const cards = document.querySelectorAll('.card-hover');
+                    
+                            cards.forEach(card => {
+                                card.addEventListener('mouseover', () => {
+                                    const hoverCard = card.querySelector('.card-team');
+                                    if (hoverCard) {
+                                        hoverCard.style.opacity = '1';
+                                        hoverCard.style.visibility = 'visible';
+                                        hoverCard.style.zIndex = '2'; // Ensures the card appears above other elements
+                                    }
+                                });
+                    
+                                card.addEventListener('mouseout', () => {
+                                    const hoverCard = card.querySelector('.card-team');
+                                    if (hoverCard) {
+                                        hoverCard.style.opacity = '0';
+                                        hoverCard.style.visibility = 'hidden';
+                                    }
+                                });
+                            });
+                        });
+                    </script>
+                    
+
+
+                </div>
+            </div>
+            
+        </div>
+    </div>
+    
+</section>
+
+
+    
+    
+
+
+<!-- portfolio ends -->
+    
+</main>
+<!-- prettier-ignore -->
+<!-- Footer 5 -->
+<footer>
+    <div class=" position-relative d-none d-md-flex">
+        <div class="col-6 bg-primary py-md-6"></div>
+        <div class="col-6 bg-primary-dark py-md-6"></div>
+        <div class="container position-absolute top-50 start-50 translate-middle">
+            <div class="row">
+                <div class="col-6 d-lg-flex gap-5">
+                    <a href="#" class="d-flex mb-lg-0 mb-2">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                            <path d="M4.75 6.75L9.25 4.75V17.25L4.75 19.25V6.75Z" stroke="white" stroke-width="1.5"
+                                stroke-linecap="round" stroke-linejoin="round" />
+                            <path d="M14.75 6.75L19.25 4.75V17.25L14.75 19.25V6.75Z" stroke="white" stroke-width="1.5"
+                                stroke-linecap="round" stroke-linejoin="round" />
+                            <path d="M14.75 6.75L9.25 4.75V17.25L14.75 19.25V6.75Z" stroke="white" stroke-width="1.5"
+                                stroke-linecap="round" stroke-linejoin="round" />
+                        </svg>
+                        <p class="text-white mb-0 ms-2">0811 Erdman Prairie, Joaville CA</p>
+                    </a>
+                    <a href="#" class="d-flex">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                            <path
+                                d="M8.89286 4.75H6.06818C5.34017 4.75 4.75 5.34017 4.75 6.06818C4.75 13.3483 10.6517 19.25 17.9318 19.25C18.6598 19.25 19.25 18.6598 19.25 17.9318V15.1071L16.1429 13.0357L14.5317 14.6468C14.2519 14.9267 13.8337 15.0137 13.4821 14.8321C12.8858 14.524 11.9181 13.9452 10.9643 13.0357C9.98768 12.1045 9.41548 11.1011 9.12829 10.494C8.96734 10.1537 9.06052 9.76091 9.32669 9.49474L10.9643 7.85714L8.89286 4.75Z"
+                                stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                        </svg>
+                        <p class="text-white mb-0 ms-2">+01 (24) 568 900</p>
+                    </a>
+                </div>
+                <div class="col-6">
+                    <div class="d-flex ms-md-5">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                            <path
+                                d="M13 16H12V12H11M12 8H12.01M21 12C21 13.1819 20.7672 14.3522 20.3149 15.4442C19.8626 16.5361 19.1997 17.5282 18.364 18.364C17.5282 19.1997 16.5361 19.8626 15.4442 20.3149C14.3522 20.7672 13.1819 21 12 21C10.8181 21 9.64778 20.7672 8.55585 20.3149C7.46392 19.8626 6.47177 19.1997 5.63604 18.364C4.80031 17.5282 4.13738 16.5361 3.68508 15.4442C3.23279 14.3522 3 13.1819 3 12C3 9.61305 3.94821 7.32387 5.63604 5.63604C7.32387 3.94821 9.61305 3 12 3C14.3869 3 16.6761 3.94821 18.364 5.63604C20.0518 7.32387 21 9.61305 21 12Z"
+                                stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                        </svg>
+                        <p class="text-white mb-0 ms-2">Our website uses cookies to improve your experience.</p>
+                        <a href="#" class="text-white ms-2 link-hover-primary-light"> Learn more </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="section-footer">
+        <div class="container-fluid bg-6">
+            <div class="container position-relative z-2">
+                <div class="row py-90">
+                    <div class="col-lg-4 pe-10">
+                        <a href="/"><img src="/assets/imgs/logo/logo-white.svg" alt="infinia"></a>
+                        <p class="text-white fw-medium mt-3 mb-6 opacity-50">You may also realize cost savings from your
+                            energy efficient choices in your custom home. Federal tax credits for some green materials
+                            can allow you to deduct as much.</p>
+                        <div class="d-flex social-icons">
+                            <a href="https://www.facebook.com/"
+                                class=" text-white border border-end-0 border-light border-opacity-10 icon-shape icon-md">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="10" height="17" viewBox="0 0 10 17"
+                                    fill="none">
+                                    <path
+                                        d="M8.84863 9.20312H6.5415V16.0938H3.46533V9.20312H0.942871V6.37305H3.46533V4.18896C3.46533 1.72803 4.94189 0.34375 7.1875 0.34375C8.26416 0.34375 9.40234 0.559082 9.40234 0.559082V2.98926H8.14111C6.91064 2.98926 6.5415 3.72754 6.5415 4.52734V6.37305H9.2793L8.84863 9.20312Z"
+                                        fill="white" />
+                                </svg>
+                            </a>
+                            <a href="https://twitter.com/"
+                                class=" text-white border border-end-0 border-light border-opacity-10 icon-shape icon-md">
+                                <i class="bi bi-twitter-x"></i>
+                            </a>
+                            <a href="https://www.linkedin.com/"
+                                class=" text-white border border-light border-opacity-10 icon-shape icon-md">
+                                <i class="bi bi-linkedin"></i>
+                            </a>
+                            <a href="https://www.behance.net/"
+                                class=" text-white border border-start-0 border-light border-opacity-10 icon-shape icon-md">
+                                <i class="bi bi-behance"></i>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="col-lg-8">
+                        <div class="row">
+                            <div class="col-lg-3 col-md-4 col-6">
+                                <h3 class="text-white opacity-50 fs-6 fw-black text-uppercase pb-3 pt-5 pt-lg-0">
+                                    Services</h3>
+                                <div class="d-flex flex-column align-items-start">
+                                    <a class="hover-effect text-white mb-2 fw-medium fs-6" href="#">Project software</a>
+                                    <a class="hover-effect text-white mb-2 fw-medium fs-6" href="#">Resource
+                                        software</a>
+                                    <a class="hover-effect text-white mb-2 fw-medium fs-6" href="#">Workflow</a>
+                                    <a class="hover-effect text-white mb-2 fw-medium fs-6" href="#">Gantt chart
+                                        makers</a>
+                                    <a class="hover-effect text-white mb-2 fw-medium fs-6" href="#">Project
+                                        dashboards</a>
+                                    <a class="hover-effect text-white mb-2 fw-medium fs-6" href="#">Task software</a>
+                                </div>
+                            </div>
+                            <div class="col-lg-3 col-md-4 col-6">
+                                <h3 class="text-white opacity-50 fs-6 fw-black text-uppercase pb-3 pt-5 pt-lg-0">
+                                    Resource</h3>
+                                <div class="d-flex flex-column align-items-start">
+                                    <a class="hover-effect text-white mb-2 fw-medium fs-6" href="#">Knowledge Base</a>
+                                    <a class="hover-effect text-white mb-2 fw-medium fs-6" href="#">Documents</a>
+                                    <a class="hover-effect text-white mb-2 fw-medium fs-6" href="#">System Status</a>
+                                    <a class="hover-effect text-white mb-2 fw-medium fs-6" href="#">Security</a>
+                                </div>
+                            </div>
+                            <div class="col-lg-6 pt-5 pt-lg-0">
+                                <p class="text-white fw-black opacity-50 text-uppercase">App & Payment</p>
+                                <p class="text-white fw-medium mt-3 mb-4 opacity-50">Download our Apps and get
+                                    extra 15% discount on your first order…!</p>
+                                <div class="d-flex gap-2">
+                                    <a href="#">
+                                        <img class="mb-2" src="/assets/imgs/footer-4/app-payment-1.png" alt="App Store">
+                                    </a>
+                                    <a href="#">
+                                        <img class="mb-2" src="/assets/imgs/footer-4/app-payment-2.png"
+                                            alt="Google Play">
+                                    </a>
+                                </div>
+                                <div class="d-flex gap-2">
+                                    <a href="#">
+                                        <img class="mb-2" src="/assets/imgs/footer-4/app-payment-3.png" alt="Microsoft">
+                                    </a>
+                                    <a href="#">
+                                        <img class="mb-2" src="/assets/imgs/footer-4/app-payment-4.png" alt="Amazon">
+                                    </a>
+                                </div>
+                                <div class="col-1"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row text-center py-4 border-top border-white border-opacity-10">
+                    <span class="text-white opacity-50">Copyright © 2024 Infinia. All Rights Reserved</span>
+                </div>
+                
+            </div>
+        </div>
+    </div>
+</footer>
+<!-- Scroll top -->
+<div class="btn-scroll-top">
+    <svg class="progress-square svg-content" width="100%" height="100%" viewBox="0 0 40 40">
+        <path
+            d="M8 1H32C35.866 1 39 4.13401 39 8V32C39 35.866 35.866 39 32 39H8C4.13401 39 1 35.866 1 32V8C1 4.13401 4.13401 1 8 1Z" />
+    </svg>
+</div>
+<!-- Libs JS -->
+<script src="/assets/js/vendors/jquery-3.7.1.min.js"></script>
+<script src="/assets/js/vendors/bootstrap.bundle.min.js"></script>
+<script src="/assets/js/vendors/swiper-bundle.min.js"></script>
+<script src="/assets/js/vendors/aos.js"></script>
+<script src="/assets/js/vendors/wow.min.js"></script>
+<script src="/assets/js/vendors/headhesive.min.js"></script>
+<script src="/assets/js/vendors/smart-stick-nav.js"></script>
+<script src="/assets/js/vendors/jquery.magnific-popup.min.js"></script>
+<script src="/assets/js/vendors/gsap.min.js"></script>
+<script src="/assets/js/vendors/imagesloaded.pkgd.min.js"></script>
+<script src="/assets/js/vendors/isotope.pkgd.min.js"></script>
+<script src="/assets/js/vendors/ScrollToPlugin.min.js"></script>
+<script src="/assets/js/vendors/ScrollTrigger.min.js"></script>
+<script src="/assets/js/vendors/jquery.carouselTicker.min.js"></script>
+<script src="/assets/js/vendors/jquery.odometer.min.js"></script>
+<script src="/assets/js/vendors/jquery.appear.js"></script>
+<script src="/assets/js/vendors/gsap-custom.js"></script>
+<script src="/assets/js/vendors/bouncing-blob.js"></script>
+<!-- Theme JS -->
+
+<script src="/assets/js/main.js"></script>
+<!-- Other scripts -->
+</body>
+
+
+
+</html>

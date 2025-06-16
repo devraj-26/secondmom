@@ -1,0 +1,200 @@
+<%- include('partials/header1'), {pathPart} %>
+<%- include('partials/whatsapp'), {pathPart} %>
+
+
+
+<br><br><br><br>
+<section id="contact" class="color-section">
+   <div class="container">
+      <div class="col-lg-8 col-lg-offset-2">
+         <!-- Section heading -->
+         <div class="section-heading">
+            <h2 style="font-size: 41px;">Partnership</h2>
+         </div>
+      </div>
+   
+     
+      <!-- Contact Form -->
+      <div class="col-lg-10 col-lg-offset-1">
+        <h4>Franchise Enquiry</h4>
+    
+        <form class="contact-form" id="dealership-enquiry" 
+            action="<%= API_BASE_URL %>/website/dealership-enquiry/create-dealership-enquiry" 
+            method="POST" novalidate>
+            
+            <div class="form-group row mb-3" style="margin-bottom: 7px;">
+                <input type="hidden" name="<%= BOOK_DEALERSHIP_ENQUIRY_DYNAMIC_FIELDS_KEYS.TYPE %>" value="Dealership Booking">
+                <input type="hidden" name="formType" value="collaboration">
+                
+                <div class="col-md-6">
+                    <input type="text" name="<%= BOOK_DEALERSHIP_ENQUIRY_DYNAMIC_FIELDS_KEYS.NAME %>" 
+                        class="form-control input-field" placeholder="Name" required="">
+                </div>
+                <div class="col-md-6">
+                    <input type="tel" name="<%= BOOK_DEALERSHIP_ENQUIRY_DYNAMIC_FIELDS_KEYS.CONTACT_NUMBER %>" 
+                        class="form-control input-field" placeholder="Contact no." maxlength="10" required="">
+                </div>
+            </div>
+    
+            <div class="form-group row mb-3" style="margin-top: 7px;">
+                <div class="col-md-6">
+                    <input type="email" name="<%= BOOK_DEALERSHIP_ENQUIRY_DYNAMIC_FIELDS_KEYS.EMAIL %>" 
+                        class="form-control input-field" placeholder="Email" required="">
+                </div>
+                <div class="col-md-6">
+                    <input type="text" name="<%= BOOK_DEALERSHIP_ENQUIRY_DYNAMIC_FIELDS_KEYS.CITY %>" 
+                        class="form-control input-field" placeholder="City / Address">
+                </div>
+            </div>
+    
+            <div class="form-group row mb-3">
+                <div class="col-md-12">
+                    <textarea name="<%= BOOK_DEALERSHIP_ENQUIRY_DYNAMIC_FIELDS_KEYS.REMARKS %>" 
+                        class="form-control input-field" 
+                        placeholder="Message / Additional Information" 
+                        style="height: 100px;"></textarea>
+                </div>
+            </div>
+    
+            <div class="text-center">
+                <button type="submit" id="submit_btn" value="Submit" class="btn" style="margin-top: 15px !important;">Let’s Collab</button>
+            </div>
+        </form>
+    
+        <div id="contact_results"></div>
+    </div>
+    
+   </div>
+</section>
+
+<style>
+    .form-group,
+#submit_btn {
+    margin-top: 0 !important;
+}
+
+</style>
+
+<script>
+    // Define constants from Node.js backend (EJS variables)
+    const BOOK_DEALERSHIP_ENQUIRY_DYNAMIC_FIELDS_KEYS = <%- JSON.stringify(BOOK_DEALERSHIP_ENQUIRY_DYNAMIC_FIELDS_KEYS) %>;
+
+    // JavaScript form handling
+    document.getElementById('dealership-enquiry').addEventListener('submit', async function (e) {
+        e.preventDefault(); // Prevent default form submission
+
+        const form = e.target;
+        const websiteID = "<%= websiteID %>";
+        const WEBSITE_ID_KEY = "<%= WEBSITE_ID_KEY %>";
+
+        const requiredFields = [
+            `input[name="${BOOK_DEALERSHIP_ENQUIRY_DYNAMIC_FIELDS_KEYS.NAME}"]`,
+            `input[name="${BOOK_DEALERSHIP_ENQUIRY_DYNAMIC_FIELDS_KEYS.CONTACT_NUMBER}"]`,
+            `input[name="${BOOK_DEALERSHIP_ENQUIRY_DYNAMIC_FIELDS_KEYS.EMAIL}"]`,
+        ];
+        let isFormValid = true;
+
+        requiredFields.forEach((selector) => {
+            const field = form.querySelector(selector);
+            if (!field || field.value.trim() === "") {
+                isFormValid = false;
+                field.classList.add("invalid-field"); // Highlight invalid fields
+            } else {
+                field.classList.remove("invalid-field");
+            }
+        });
+
+        if (!isFormValid) {
+            showCustomAlert("Please fill out all required fields.", "error");
+            return; // Stop submission if required fields are not filled
+        }
+
+        function getSelectedServices() {
+            const selectedServices = {};
+            document.querySelectorAll('input[type="checkbox"]:checked').forEach((checkbox, index) => {
+                selectedServices[`service_${index + 1}`] = checkbox.nextElementSibling.innerText.trim();
+            });
+            return selectedServices;
+        }
+
+        // Prepare the payload dynamically based on the form fields
+        const payload = {
+            formType: "collaboration", // Ensures correct tracking for Collaboration form
+            [BOOK_DEALERSHIP_ENQUIRY_DYNAMIC_FIELDS_KEYS.NAME]: form.querySelector(
+                `input[name="${BOOK_DEALERSHIP_ENQUIRY_DYNAMIC_FIELDS_KEYS.NAME}"]`
+            ).value,
+            [BOOK_DEALERSHIP_ENQUIRY_DYNAMIC_FIELDS_KEYS.CONTACT_NUMBER]: form.querySelector(
+                `input[name="${BOOK_DEALERSHIP_ENQUIRY_DYNAMIC_FIELDS_KEYS.CONTACT_NUMBER}"]`
+            ).value,
+            [BOOK_DEALERSHIP_ENQUIRY_DYNAMIC_FIELDS_KEYS.EMAIL]: form.querySelector(
+                `input[name="${BOOK_DEALERSHIP_ENQUIRY_DYNAMIC_FIELDS_KEYS.EMAIL}"]`
+            ).value,
+            [BOOK_DEALERSHIP_ENQUIRY_DYNAMIC_FIELDS_KEYS.CITY]: form.querySelector(
+                `input[name="${BOOK_DEALERSHIP_ENQUIRY_DYNAMIC_FIELDS_KEYS.CITY}"]`
+            ).value,
+            [BOOK_DEALERSHIP_ENQUIRY_DYNAMIC_FIELDS_KEYS.TYPE]: form.querySelector(
+                `input[name="${BOOK_DEALERSHIP_ENQUIRY_DYNAMIC_FIELDS_KEYS.TYPE}"]`
+            ).value,
+            [BOOK_DEALERSHIP_ENQUIRY_DYNAMIC_FIELDS_KEYS.REMARKS]: form.querySelector(
+                `textarea[name="${BOOK_DEALERSHIP_ENQUIRY_DYNAMIC_FIELDS_KEYS.REMARKS}"]`
+            ).value,
+            [BOOK_DEALERSHIP_ENQUIRY_DYNAMIC_FIELDS_KEYS.SERVICE]: getSelectedServices(),
+            [WEBSITE_ID_KEY]: websiteID,
+        };
+
+        const headers = new Headers({
+            "Content-Type": "application/json",
+        });
+
+        console.log("Payload=", payload);
+        console.log("Selected Services=", getSelectedServices());
+
+        try {
+            const response = await fetch(form.action, {
+                method: "POST",
+                headers,
+                body: JSON.stringify(payload),
+            });
+
+            if (!response.ok) {
+                throw new Error(`HTTP error! Status: ${response.status}`);
+            }
+
+            const data = await response.json();
+
+            // Display a success message
+            showCustomAlert(data?.message || "Form submitted successfully!", "success");
+
+            // Reset the form after successful submission
+            form.reset();
+
+            // Redirect to the Thank You page with formType
+            window.location.href = '/thank-you?formType=collaboration';
+
+        } catch (error) {
+            showCustomAlert("Form not submitted!", "error");
+            console.error("Form submission error", error);
+        }
+    });
+
+    // Custom alert function
+    function showCustomAlert(message, type) {
+        const alertBox = document.createElement("div");
+        alertBox.className = `custom-alert ${type}`;
+        alertBox.innerHTML = `<span>${message}</span><button class="close-alert">×</button>`;
+
+        document.body.appendChild(alertBox);
+
+        // Close button functionality
+        alertBox.querySelector(".close-alert").addEventListener("click", () => {
+            alertBox.remove();
+        });
+
+        // Auto-remove after 5 seconds
+        setTimeout(() => {
+            alertBox.remove();
+        }, 5000);
+    }
+</script>
+
+<%- include('partials/footer'), {pathPart} %>

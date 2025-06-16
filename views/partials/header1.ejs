@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+<html lang="en">
+  <!-- Added by HTTrack --><meta
+    http-equiv="content-type"
+    content="text/html;charset=UTF-8"
+  /><!-- /Added by HTTrack -->
+  <head>
+    <title><%= seoDetails.title %></title>
+    <meta name="description" content="<%= seoDetails.metaDescription %>" />
+    <meta name="keywords" content="<%= seoDetails.metaKeyword %>" />
+    <meta name="image" content="<%= seoDetails.metaImage %>" />
+    <meta property="og:image" content="<%= seoDetails.metaImage %>" />
+
+    <meta
+      name="description"
+      content="<%= seoDetails?.metaDescription || '' %>"
+    />
+
+    <!-- Open Graph meta tags for social sharing -->
+    <meta property="og:title" content="<%= seoDetails?.title || '' %>" />
+    <meta
+      property="og:description"
+      content="<%= seoDetails?.metaDescription || '' %>"
+    />
+    <meta property="og:image" content="<%= seoDetails?.metaImage || '' %>" />
+    <meta property="keyword" content="<%= seoDetails?.metaKeyword || '' %>" />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="<%= seoDetails?.canonicle || '' %>">
+<meta property="og:image:alt" content="Meta Image">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="<%= seoDetails?.title || '' %>">
+<meta name="twitter:description" content="<%= seoDetails?.metaDescription || '' %>">
+<meta name="twitter:image" content="<%= seoDetails?.metaImage || '' %>">
+<meta name="author" content="secondmom">
+
+    <!-- <link rel="canonical" href="<%= seoDetails?.canonical?.startsWith('http') ? seoDetails.canonical : 'https://www.celebrationworld.in/' %>"> -->
+
+    <link rel="canonical" href="<%= seoDetails?.canonical %>" />
+    <link rel="canonical" href="<%= seoDetails?.canonical || 'https://thelittlecocoon.com//' %>">
+
+
+    <meta charset="utf-8" />
+
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=5.0, minimum-scale=1.0, user-scalable=yes"
+    />
+
+    <meta
+      name="description"
+      content="The Little Cocoon Preschool teaches children how to learn instead of just what to learn. The end result is a lifelong love of learning which primes them for successful careers in any direction they pursue. Children who benefit from these experiences grow into confident adults.!"
+    />
+    <meta
+      name="author"
+      content="The Little Cocoon Preschool teaches children how to learn instead of just what to learn. The end result is a lifelong love of learning which primes them for successful careers in any direction they pursue. Children who benefit from these experiences grow into confident adults.!"
+    />
+    <!-- Page title -->
+    <!-- <title>Littlecocoon</title> -->
+    <meta http-equiv="x-ua-compatible" content="ie=edge" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <meta property="og:url" content="<%= seoDetails?.canonical %>" />
+
+    <meta property="og:type" content="website" />
+
+    <meta property="og:title" content="<%= seoDetails?.title || '' %>" />
+
+    <meta property="og:image" content="<%= seoDetails?.metaImage || '' %>" />
+
+    <meta
+      property="og:description"
+      content="<%= seoDetails.metaDescription %>"
+    />
+    <!-- Bootstrap Core CSS -->
+    <link href="/assets/css/bootstrap.css" rel="stylesheet" type="text/css" />
+    <link
+      rel="shortcut icon"
+      href="/assets/images/fav/favicon.ico"
+      type="image/x-icon"
+    />
+    <link
+      rel="icon"
+      href="/assets/images/fav/favicon.ico"
+      type="image/x-icon"
+    />
+    <!-- Icon fonts -->
+    <link
+      href="/assets/fonts/font-awesome/css/font-awesome.min.css"
+      rel="stylesheet"
+      type="text/css"
+    />
+    <link
+      href="/assets/fonts/flaticons/flaticon.css"
+      rel="stylesheet"
+      type="text/css"
+    />
+    <link
+      href="/assets/fonts/glyphicons/bootstrap-glyphicons.css"
+      rel="stylesheet"
+      type="text/css"
+    />
+    <!-- Google fonts -->
+    <link
+      href="https://fonts.googleapis.com/css?family=Lato:400,700,800%7CAlegreya+Sans:700,900"
+      rel="stylesheet"
+      type="text/css"
+    />
+    <!-- Theme CSS -->
+    <link href="/assets/css/style.css" rel="stylesheet" />
+    <!-- Color Style CSS -->
+    <link href="/assets/styles/funtime.css" rel="stylesheet" />
+    <!-- Owl Slider & Prettyphoto -->
+    <link rel="stylesheet" href="/assets/css/owl.carousel.css" />
+    <link rel="stylesheet" href="/assets/css/prettyPhoto.css" />
+    <!-- LayerSlider stylesheet -->
+    <link rel="stylesheet" href="/assets/layerslider/css/layerslider.css" />
+
+    <!-- Switcher Only -->
+    <link
+      rel="stylesheet"
+      id="switcher-css"
+      type="text/css"
+      href="/assets/switcher/css/switcher.css"
+      media="all"
+    />
+    <!--Alternate CSS -->
+    <link
+      rel="alternate stylesheet"
+      type="text/css"
+      href="/assets/styles/funtime.css"
+      title="funtime"
+      media="all"
+    />
+    <link
+      rel="alternate stylesheet"
+      type="text/css"
+      href="/assets/styles/playground.css"
+      title="playground"
+      media="all"
+    />
+    <link
+      rel="alternate stylesheet"
+      type="text/css"
+      href="/assets/styles/games.css"
+      title="games"
+      media="all"
+    />
+    <link
+      rel="alternate stylesheet"
+      type="text/css"
+      href="/assets/styles/childhood.css"
+      title="childhood"
+      media="all"
+    />
+    <link
+      rel="alternate stylesheet"
+      type="text/css"
+      href="/assets/styles/school.css"
+      title="school"
+      media="all"
+    />
+    <link
+      rel="alternate stylesheet"
+      type="text/css"
+      href="/assets/switcher/css/boxed.css"
+      title="boxed"
+      media="all"
+    />
+    <link
+      rel="alternate stylesheet"
+      type="text/css"
+      href="/assets/switcher/css/full.css"
+      title="full"
+      media="all"
+    />
+    <!-- see https://github.com/utilmind/on-ready-js -->
+    <!-- <script src="../www.google.com/recaptcha/api.js" async defer></script> -->
+    <style>
+      #more {
+        display: none;
+      }
+    </style>
+    <style>
+      #more1 {
+        display: none;
+      }
+    </style>
+  </head>
+  <!-- Google Analytics -->
+  <script
+    async
+    src="https://www.googletagmanager.com/gtag/js?id=G-LEFPXRCTVY"
+  ></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag() {
+      dataLayer.push(arguments);
+    }
+    gtag("js", new Date());
+
+    gtag("config", "G-LEFPXRCTVY");
+  </script>
+
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "ChildCare",
+      "name": "SecondMom Child Care Pvt. Ltd.",
+      "description": "SecondMom is a premier daycare center in Vadodara, offering a nurturing environment for children to develop social, emotional, and learning skills. With over 10 years of experience in the childcare industry, we provide qualified staff, safe facilities, and programs designed to encourage independence, teamwork, and creativity.",
+      "url": "https://secondmom.in/",
+      "address": {
+        "@type": "PostalAddress",
+        "addressLocality": "Vadodara",
+        "addressRegion": "Gujarat",
+        "addressCountry": "IN"
+      },
+      "contactPoint": {
+        "@type": "ContactPoint",
+        "contactType": "Customer Service",
+        "email": "info@secondmom.in",
+        "telephone": "+91-123-456-7890"
+      },
+      "founder": {
+        "@type": "Person",
+        "name": "Sarika Gupta",
+        "description": "Founder of SecondMom Child Care Pvt. Ltd. with 15 years of experience in child education and development."
+      },
+      "openingHoursSpecification": [
+        {
+          "@type": "OpeningHoursSpecification",
+          "dayOfWeek": [
+            "Monday",
+            "Tuesday",
+            "Wednesday",
+            "Thursday",
+            "Friday"
+          ],
+          "opens": "07:00",
+          "closes": "19:00"
+        }
+      ],
+      "offers": {
+        "@type": "Offer",
+        "itemOffered": {
+          "@type": "Service",
+          "name": "Daycare and Early Learning Programs",
+          "description": "Programs designed to foster independence, teamwork, leadership, and emotional development through engaging activities, child-friendly spaces, and nutritious meals tailored to children's needs."
+        }
+      },
+      "hasCredential": [
+        {
+          "@type": "EducationalOccupationalCredential",
+          "name": "Certified Child Care Providers",
+          "description": "Staff are fully skilled, qualified, and meet certification levels for childcare and early education."
+        }
+      ],
+      "aggregateRating": {
+        "@type": "AggregateRating",
+        "ratingValue": "4.8",
+        "reviewCount": "50"
+      }
+    }
+  </script>
+  
+  <body
+    id="page-top"
+    data-spy="scroll"
+    data-target=".navbar-custom"
+    style="background-color: #fff7ed"
+  >
+    <!-- Page width 'Boxed' of 'Full' -->
+    <div class="full">
+      <!-- Preloader -->
+      <div id="preloader">
+        <div class="preloader">
+          <span></span>
+          <span></span>
+          <span></span>
+          <span></span>
+          <span></span>
+        </div>
+      </div>
+
+      <!-- Navbar -->
+      <nav class="navbar navbar-custom navbar-fixed-top">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header">
+          <button
+            type="button"
+            class="navbar-toggle"
+            data-toggle="collapse"
+            data-target="#navbar-brand-centered"
+          >
+            <i class="fa fa-bars"></i>
+          </button>
+          <div class="navbar-brand-centered page-scroll">
+            <a href="/"
+              ><img
+                src="/assets/images/secondmomlogo.png"
+                
+                alt="cocoonlogo"
+            /></a>
+          </div>
+        </div>
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse" id="navbar-brand-centered">
+          <div class="container">
+            <ul class="nav navbar-nav page-scroll navbar-left">
+              <li><a href="/">Home</a></li>
+                            <li><a href="/programs">Programs</a></li>
+
+              <li><a href="/about">About Us</a></li>
+              <!-- <li><a href="/#programs">Courses</a></li> -->
+              <li><a href="/corporate">Corporate Daycare</a></li>
+              <li><a href="/blogs">Blogs</a></li>
+
+            </ul>
+            <ul class="nav navbar-nav page-scroll navbar-right">
+              <!-- Dropdown -->
+              <!-- <li>
+                <a href="/blogs">Updates</a>
+              </li> -->
+              <li class="dropdown">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown"
+                  >Gallery<b class="caret"></b
+                ></a>
+                <ul class="dropdown-menu">
+                  <li style="margin-left: 55px">
+                    <a href="/gallery">Images</a>
+                  </li>
+                  <li style="margin-left: 55px">
+                    <a href="/videos">Videos</a>
+                  </li>
+                </ul>
+              </li>
+              <li><a href="/career">Career</a></li>
+              <li><a href="/contact">Contact</a></li>
+              <li><a href="/centers">Centers</a></li>
+              <li><a href="/franchise-enquiry">Franchise</a></li>
+
+              <li>
+                <a
+                  target="_blank"
+                  href="https://api.whatsapp.com/send?phone=+918733848886&amp;text=Hello,Welcome%20to%20Second Mom!%20Looking%20for%20instant%20help...?%20Connect%20here%20on%20Whatsapp"
+                  class="whatsapp-link"
+                >
+                  <img
+                    src="/assets/images/whatsapp.png"
+                    class="whatsapp-icon"
+                    alt="WhatsApp"
+                  />
+                </a>
+              </li>
+
+              <style>
+                .dropdown-menu {
+                  /* background-color: none !important; */
+                  box-shadow: none !important;
+                  background: none !important;
+                  background-size: 50px !important;
+                  max-width: 50px !important;
+                  min-width: none !important;
+                }
+                /* Click Me Animation on WhatsApp Icon */
+                .whatsapp-icon {
+                  height: 30px;
+                  animation: pulse 1.5s infinite;
+                }
+
+                @keyframes pulse {
+                  0% {
+                    transform: scale(1);
+                    opacity: 1;
+                  }
+                  50% {
+                    transform: scale(1.2);
+                    opacity: 0.7;
+                  }
+                  100% {
+                    transform: scale(1);
+                    opacity: 1;
+                  }
+                }
+              </style>
+
+              <!-- Dropdown -->
+              <!-- <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Pages<b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                           <li><a href="elements.html">Elements</a></li>
+                           <li><a href="index_video.html">Video Header</a></li>
+                           <li><a href="sidebar-page.html">Sidebar Page</a></li>
+						   <li><a href="calendar.html">Calendar</a></li>
+                        </ul>
+                     </li> -->
+            </ul>
+          </div>
+        </div>
+        <!-- /.navbar-collapse -->
+      </nav>
+      <!-- /navbar ends -->
+    </div>
+  </body>
+</html>
+<%- include('sidemenu'), {pathPart} %>

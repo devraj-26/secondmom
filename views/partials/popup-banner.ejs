@@ -1,0 +1,264 @@
+<dialog id="dialog">
+    <div class="popup-container">
+        <!-- Close button -->
+        <div class="close-btn"></div>
+
+        <!-- Image content -->
+        <div class="popup-content">
+            <div class="popup-banner">
+                <% popupBanner.forEach((slide, index) => { %>
+                    <div class="single-slide-item <%= index === 0 ? 'active' : '' %>">
+                        <% if (slide.bannerImage && slide.bannerImage.webView) { %>
+                            <a href="<%= slide.hyperLink && slide.hyperLink !== '' ? slide.hyperLink : '#' %>">
+                                <div class="image-wrapper">
+                                    <img src="<%= process.env.S3_BASE_URL + slide.bannerImage.webView %>" alt="<%= slide.title %>" class="modal-image">
+                                </div>
+                            </a>
+                        <% } %>
+                    </div>
+                <% }) %>
+            </div>
+        </div>
+    </div>
+</dialog>
+
+<style>
+    dialog * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        border: none;
+        outline: none;
+    }
+
+    dialog {
+        max-width: 90vw;
+        max-height: 90vh;
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        background: none;
+        background-color: transparent;
+        padding: 0;
+        margin: 0;
+        border: none;
+        border-width: 0;
+        overflow: hidden;
+        z-index: 9999;
+    }
+
+    dialog::backdrop {
+        background: none;
+        background-color: transparent;
+        pointer-events: auto;
+    }
+
+    .popup-container {
+        width: 100%;
+        height: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        position: relative;
+        background: none;
+        background-color: transparent;
+        border: none;
+        border-width: 0;
+    }
+
+    .popup-content {
+        width: 100%;
+        height: auto;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background: none;
+        background-color: transparent;
+        border: none;
+        border-width: 0;
+    }
+
+    .popup-banner {
+        width: 100%;
+        position: relative;
+        overflow: hidden;
+        background: none;
+        background-color: transparent;
+        border: none;
+        border-width: 0;
+    }
+
+    .single-slide-item {
+        display: none;
+        width: 100%;
+        position: relative;
+        background: none;
+        background-color: transparent;
+        border: none;
+        border-width: 0;
+    }
+
+    .single-slide-item.active {
+        display: block;
+    }
+
+    .image-wrapper {
+        line-height: 0;
+        text-align: center;
+        position: relative;
+        background: none;
+        background-color: transparent;
+        border: none;
+        border-width: 0;
+    }
+
+    img.modal-image {
+        max-width: 100%;
+        height: auto;
+        object-fit: contain;
+        display: block;
+        margin: 0 auto;
+        background: none;
+        background-color: transparent;
+        border: none;
+        border-width: 0;
+        outline: none;
+        box-shadow: none;
+    }
+
+    .close-btn {
+        position: absolute;
+        top: 0;
+        right: 0;
+        width: 30px;
+        height: 30px;
+        cursor: pointer;
+        z-index: 10000;
+        background: rgba(255, 255, 255, 0.8);
+        border-radius: 0 0 0 5px;
+        border: none;
+        border-width: 0;
+        outline: none;
+    }
+
+    .close-btn::before,
+    .close-btn::after {
+        content: '';
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        width: 20px;
+        height: 2px;
+        background: #000;
+        border: none;
+        border-width: 0;
+        outline: none;
+    }
+
+    .close-btn::before {
+        transform: translate(-50%, -50%) rotate(45deg);
+    }
+
+    .close-btn::after {
+        transform: translate(-50%, -50%) rotate(-45deg);
+    }
+
+    @media (max-width: 768px) {
+        dialog {
+            max-width: 95vw;
+            border: none;
+            border-width: 0;
+            outline: none;
+            background: none;
+            background-color: transparent;
+        }
+
+        img.modal-image {
+            max-width: 99%;
+            border: none;
+            border-width: 0;
+            outline: none;
+            box-shadow: none;
+            background: none;
+            background-color: transparent;
+        }
+
+        .popup-container,
+        .popup-content,
+        .popup-banner,
+        .single-slide-item,
+        .image-wrapper,
+        .close-btn {
+            border: none;
+            border-width: 0;
+            outline: none;
+            box-shadow: none;
+            background: none;
+            background-color: transparent;
+        }
+
+        .close-btn {
+            width: 28px;
+            height: 28px;
+            top: 8px;
+            right: 8px;
+            background: rgba(255, 255, 255, 0.9);
+        }
+
+        .close-btn::before,
+        .close-btn::after {
+            width: 18px;
+            border: none;
+            border-width: 0;
+            outline: none;
+        }
+    }
+</style>
+
+<script>
+    const dialogElem = document.getElementById("dialog");
+    const closeBtn = document.querySelector(".close-btn");
+    const slides = document.querySelectorAll(".single-slide-item");
+    let currentSlide = 0;
+
+    // Close event handlers
+    closeBtn.addEventListener('click', () => dialogElem.close());
+    dialogElem.addEventListener('click', (e) => {
+        if (e.target === dialogElem) dialogElem.close();
+    });
+
+    // Slider functionality
+    function showSlide(index) {
+        slides.forEach((slide, i) => {
+            slide.classList.toggle("active", i === index);
+        });
+    }
+
+    function nextSlide() {
+        currentSlide = (currentSlide + 1) % slides.length;
+        showSlide(currentSlide);
+    }
+
+    function managePopup() {
+        if (!sessionStorage.getItem('popup') && document.querySelector('.modal-image')) {
+            setTimeout(() => {
+                dialogElem.showModal();
+                sessionStorage.setItem('popup', 'true');
+                
+                // Start slider
+                if (slides.length > 1) {
+                    setInterval(nextSlide, 3000);
+                }
+
+                // Auto-close after 10 seconds
+                setTimeout(() => {
+                    if (dialogElem.open) dialogElem.close();
+                }, 10000);
+            }, 2000);
+        }
+    }
+
+    // Initialize popup
+    managePopup();
+</script>

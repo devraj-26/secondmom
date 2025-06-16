@@ -1,0 +1,39 @@
+  <!-- Testimonial Section  -->
+
+  <div id="testimonial-2" class="testimonial-section section-padding">
+    <div class="container">
+        <div class="row">
+            <div class="col-xl-6">
+                <div class="section-title text-low">
+                    <h2>Our Clients <br>
+                        - are Saying <span></span></h2>
+                </div>                    
+            </div>
+            <div class="col-xl-6 text-lg-end">
+                <p>What our Clients are saying about Architon Lorem ipsum dolor sit amet, consectetur adipisicing elit. Reiciendis dicta aperiam temporibus mollitia necessitatibus perferendis rerum provident atque fuga nostrum. </p>                  
+            </div>
+        </div>
+        
+        <div class="row mt-40">
+            <div class="testimonial-carousel owl-carousel">
+                
+            <div class="single-testimonial-item">
+                <% testimonials.forEach(item => { %>
+                    <div class="testimonial-img mb-30">
+
+                        <img src="<%= process.env.S3_BASE_URL + item.image %>" alt="">
+                    </div>
+                    <p title="<%= item.review %>"><%= item.review.length > 140 ? item.review.substring(0, 140) + "..." : item.review %></p>
+                    <div class="separator"></div>
+                    <div class="testimonial-author">
+                        <h6><%= item.name %></h6>
+                        <p><%= item.companyProfile %></p>
+                    </div>
+                    <% }) %>
+                </div>
+                
+            </div>
+        </div>
+       
+    </div>
+</div>

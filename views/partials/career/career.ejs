@@ -1,0 +1,311 @@
+
+
+
+
+
+
+
+<!-- <script>
+    const websiteID = "<%= websiteID %>";
+const WEBSITE_ID_KEY = "<%= WEBSITE_ID_KEY %>";
+
+const CAREER_ENQUIRY_DYNAMIC_FIELDS_KEYS = <%- JSON.stringify(CAREER_ENQUIRY_DYNAMIC_FIELDS_KEYS) %>;
+const UPLOAD_FILES_END_POINT = `<%= API_BASE_URL %>/third-party/file-upload/upload-files`;
+const CREATE_CAREER_ENQUIRY_END_POINT = `<%= API_BASE_URL %>/website/job-application/create-job-application
+`;
+
+// Function to display custom alert messages
+function showAlert(message, isSuccess = true) {
+    const alertContainer = document.createElement('div');
+    alertContainer.className = `custom-alert ${isSuccess ? 'success' : 'error'}`;
+    alertContainer.textContent = message;
+
+    const formContainer = document.getElementById('career-form').parentElement;
+    formContainer.insertBefore(alertContainer, formContainer.firstChild);
+
+    // Remove the alert after 5 seconds
+    setTimeout(() => {
+        alertContainer.remove();
+    }, 5000);
+}
+
+document.getElementById('career-form').addEventListener('submit', async function (e) {
+    e.preventDefault(); // Prevent default form submission
+    try {
+        const form = e.target;
+
+        // Upload resume file
+        const uploadFileData = new FormData();
+        uploadFileData.append(
+            "file",
+            form.querySelector(
+                `input[name="${CAREER_ENQUIRY_DYNAMIC_FIELDS_KEYS.RESUME}"]`
+            ).files[0]
+        );
+
+        const fileUploadResponse = await fetch(UPLOAD_FILES_END_POINT, {
+            method: "POST",
+            body: uploadFileData,
+        });
+
+        if (!fileUploadResponse.ok) {
+            throw new Error(`HTTP error! Status: ${fileUploadResponse.status}`);
+        }
+
+        const fileUploadData = await fileUploadResponse.json();
+          console.log("ok");
+        const payload = {
+            [CAREER_ENQUIRY_DYNAMIC_FIELDS_KEYS.NAME]: form.querySelector(
+                `input[name="${CAREER_ENQUIRY_DYNAMIC_FIELDS_KEYS.NAME}"]`
+            ).value,
+            [CAREER_ENQUIRY_DYNAMIC_FIELDS_KEYS.CONTACT_NUMBER]: form.querySelector(
+                `input[name="${CAREER_ENQUIRY_DYNAMIC_FIELDS_KEYS.CONTACT_NUMBER}"]`
+            ).value,
+            [CAREER_ENQUIRY_DYNAMIC_FIELDS_KEYS.EMAIL]: form.querySelector(
+                `input[name="${CAREER_ENQUIRY_DYNAMIC_FIELDS_KEYS.EMAIL}"]`
+            ).value,
+            [CAREER_ENQUIRY_DYNAMIC_FIELDS_KEYS.ID]: form.querySelector(
+                `input[name="${CAREER_ENQUIRY_DYNAMIC_FIELDS_KEYS.ID}"]`
+            ).value,
+            [CAREER_ENQUIRY_DYNAMIC_FIELDS_KEYS.REMARKS]: form.querySelector(
+                `textarea[name="${CAREER_ENQUIRY_DYNAMIC_FIELDS_KEYS.REMARKS}"]`
+            ).value,
+            [CAREER_ENQUIRY_DYNAMIC_FIELDS_KEYS.RESUME]:
+                fileUploadData?.data?.length > 0
+                    ? fileUploadData?.data[0]?.imageNames[0]
+                    : "",
+            [WEBSITE_ID_KEY]: websiteID,
+        };
+
+        const headers = new Headers({
+            "Content-Type": "application/json",
+        });
+
+        const response = await fetch(CREATE_CAREER_ENQUIRY_END_POINT, {
+            method: "POST",
+            headers,
+            body: JSON.stringify(payload),
+        });
+
+        if (!response.ok) {
+            throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+
+        const data = await response.json();
+
+        showAlert(data?.message, true); // Success message
+        form.reset();
+    } catch (error) {
+        showAlert("Form not submitted!", false); // Error message
+        console.error("Form submission error:", error);
+    }
+});
+
+</script> -->
+
+<!-- <script>
+    const websiteID = "<%= websiteID %>";
+    const WEBSITE_ID_KEY = "<%= WEBSITE_ID_KEY %>";
+
+    const CAREER_ENQUIRY_DYNAMIC_FIELDS_KEYS = <%- JSON.stringify(CAREER_ENQUIRY_DYNAMIC_FIELDS_KEYS) %>;
+    const UPLOAD_FILES_END_POINT = `<%= API_BASE_URL %>/third-party/file-upload/upload-files`;
+    const CREATE_CAREER_ENQUIRY_END_POINT = `<%= API_BASE_URL %>/website/job-application/create-job-application`;
+
+    // Function to display custom alert messages
+    function showAlert(message, isSuccess = true) {
+        const alertContainer = document.createElement('div');
+        alertContainer.className = `custom-alert ${isSuccess ? 'success' : 'error'}`;
+        alertContainer.textContent = message;
+
+        const formContainer = document.getElementById('career-form').parentElement;
+        formContainer.insertBefore(alertContainer, formContainer.firstChild);
+
+        // Remove the alert after 5 seconds
+        setTimeout(() => {
+            alertContainer.remove();
+        }, 5000);
+    }
+
+    document.getElementById('career-form').addEventListener('submit', async function (e) {
+        e.preventDefault(); // Prevent default form submission
+        try {
+            const form = e.target;
+
+            // Upload resume file
+            const uploadFileData = new FormData();
+            uploadFileData.append(
+                "file",
+                form.querySelector(
+                    `input[name="${CAREER_ENQUIRY_DYNAMIC_FIELDS_KEYS.RESUME}"]`
+                ).files[0]
+            );
+
+            const fileUploadResponse = await fetch(UPLOAD_FILES_END_POINT, {
+                method: "POST",
+                body: uploadFileData,
+            });
+
+            if (!fileUploadResponse.ok) {
+                throw new Error(`HTTP error! Status: ${fileUploadResponse.status}`);
+            }
+
+            const fileUploadData = await fileUploadResponse.json();
+            console.log("ok");
+
+            const payload = {
+                [CAREER_ENQUIRY_DYNAMIC_FIELDS_KEYS.NAME]: form.querySelector(
+                    `input[name="${CAREER_ENQUIRY_DYNAMIC_FIELDS_KEYS.NAME}"]`
+                ).value,
+                [CAREER_ENQUIRY_DYNAMIC_FIELDS_KEYS.CONTACT_NUMBER]: form.querySelector(
+                    `input[name="${CAREER_ENQUIRY_DYNAMIC_FIELDS_KEYS.CONTACT_NUMBER}"]`
+                ).value,
+                [CAREER_ENQUIRY_DYNAMIC_FIELDS_KEYS.EMAIL]: form.querySelector(
+                    `input[name="${CAREER_ENQUIRY_DYNAMIC_FIELDS_KEYS.EMAIL}"]`
+                ).value,
+                [CAREER_ENQUIRY_DYNAMIC_FIELDS_KEYS.ID]: form.querySelector(
+                    `input[name="${CAREER_ENQUIRY_DYNAMIC_FIELDS_KEYS.ID}"]`
+                ).value,
+                [CAREER_ENQUIRY_DYNAMIC_FIELDS_KEYS.REMARKS]: form.querySelector(
+                    `textarea[name="${CAREER_ENQUIRY_DYNAMIC_FIELDS_KEYS.REMARKS}"]`
+                ).value,
+                [CAREER_ENQUIRY_DYNAMIC_FIELDS_KEYS.RESUME]:
+                    fileUploadData?.data?.length > 0
+                        ? fileUploadData?.data[0]?.imageNames[0]
+                        : "",
+                [WEBSITE_ID_KEY]: websiteID,
+            };
+
+            const headers = new Headers({
+                "Content-Type": "application/json",
+            });
+
+            const response = await fetch(CREATE_CAREER_ENQUIRY_END_POINT, {
+                method: "POST",
+                headers,
+                body: JSON.stringify(payload),
+            });
+
+            if (!response.ok) {
+                throw new Error(`HTTP error! Status: ${response.status}`);
+            }
+
+            const data = await response.json();
+
+            showAlert(data?.message, true); // Success message
+            form.reset();
+
+            // Redirect to the thank you page
+            window.location.href = 'thank-you';
+
+        } catch (error) {
+            showAlert("Form not submitted!", false); // Error message
+            console.error("Form submission error:", error);
+        }
+    });
+</script>
+              -->
+
+              <script>
+                const websiteID = "<%= websiteID %>";
+                const WEBSITE_ID_KEY = "<%= WEBSITE_ID_KEY %>";
+            
+                const CAREER_ENQUIRY_DYNAMIC_FIELDS_KEYS = <%- JSON.stringify(CAREER_ENQUIRY_DYNAMIC_FIELDS_KEYS) %>;
+                const UPLOAD_FILES_END_POINT = `<%= API_BASE_URL %>/third-party/file-upload/upload-files`;
+                const CREATE_CAREER_ENQUIRY_END_POINT = `<%= API_BASE_URL %>/website/job-application/create-job-application`;
+            
+                // Function to display custom alert messages
+                function showAlert(message, isSuccess = true) {
+                    const alertContainer = document.createElement("div");
+                    alertContainer.className = `custom-alert ${isSuccess ? "success" : "error"}`;
+                    alertContainer.textContent = message;
+            
+                    const formContainer = document.getElementById("career-form").parentElement;
+                    formContainer.insertBefore(alertContainer, formContainer.firstChild);
+            
+                    // Remove the alert after 5 seconds
+                    setTimeout(() => {
+                        alertContainer.remove();
+                    }, 5000);
+                }
+            
+                document.getElementById("career-form").addEventListener("submit", async function (e) {
+                    e.preventDefault(); // Prevent default form submission
+                    try {
+                        const form = e.target;
+                        let resumeFile = "";
+            
+                        // Upload resume file (if provided)
+                        const fileInput = form.querySelector(`input[name="${CAREER_ENQUIRY_DYNAMIC_FIELDS_KEYS.RESUME}"]`);
+                        if (fileInput && fileInput.files.length > 0) {
+                            const uploadFileData = new FormData();
+                            uploadFileData.append("file", fileInput.files[0]);
+            
+                            try {
+                                const fileUploadResponse = await fetch(UPLOAD_FILES_END_POINT, {
+                                    method: "POST",
+                                    body: uploadFileData,
+                                });
+            
+                                if (!fileUploadResponse.ok) {
+                                    throw new Error(`File Upload Error! Status: ${fileUploadResponse.status}`);
+                                }
+            
+                                const fileUploadData = await fileUploadResponse.json();
+                                resumeFile =
+                                    fileUploadData?.data?.length > 0 ? fileUploadData?.data[0]?.imageNames[0] : "";
+                            } catch (fileError) {
+                                console.error("File upload error:", fileError);
+                            }
+                        }
+            
+                        // Prepare the payload
+                        const payload = {
+                            formType: "career-enquiry", // ✅ Ensures proper tracking for Career Enquiry form
+                            [CAREER_ENQUIRY_DYNAMIC_FIELDS_KEYS.NAME]: form.querySelector(
+                                `input[name="${CAREER_ENQUIRY_DYNAMIC_FIELDS_KEYS.NAME}"]`
+                            ).value,
+                            [CAREER_ENQUIRY_DYNAMIC_FIELDS_KEYS.CONTACT_NUMBER]: form.querySelector(
+                                `input[name="${CAREER_ENQUIRY_DYNAMIC_FIELDS_KEYS.CONTACT_NUMBER}"]`
+                            ).value,
+                            [CAREER_ENQUIRY_DYNAMIC_FIELDS_KEYS.EMAIL]: form.querySelector(
+                                `input[name="${CAREER_ENQUIRY_DYNAMIC_FIELDS_KEYS.EMAIL}"]`
+                            ).value,
+                            [CAREER_ENQUIRY_DYNAMIC_FIELDS_KEYS.ID]: form.querySelector(
+                                `input[name="${CAREER_ENQUIRY_DYNAMIC_FIELDS_KEYS.ID}"]`
+                            ).value,
+                            [CAREER_ENQUIRY_DYNAMIC_FIELDS_KEYS.REMARKS]: form.querySelector(
+                                `textarea[name="${CAREER_ENQUIRY_DYNAMIC_FIELDS_KEYS.REMARKS}"]`
+                            ).value,
+                            [CAREER_ENQUIRY_DYNAMIC_FIELDS_KEYS.RESUME]: resumeFile,
+                            [WEBSITE_ID_KEY]: websiteID,
+                        };
+            
+                        const headers = new Headers({
+                            "Content-Type": "application/json",
+                        });
+            
+                        const response = await fetch(CREATE_CAREER_ENQUIRY_END_POINT, {
+                            method: "POST",
+                            headers,
+                            body: JSON.stringify(payload),
+                        });
+            
+                        if (!response.ok) {
+                            throw new Error(`HTTP error! Status: ${response.status}`);
+                        }
+            
+                        const data = await response.json();
+            
+                        // Show success message and reset form
+                        showAlert(data?.message, true);
+                        form.reset();
+            
+                        // ✅ Redirect to the Thank You page with formType
+                        window.location.href = "/thank-you?formType=career-enquiry";
+                    } catch (error) {
+                        showAlert("Form not submitted!", false);
+                        console.error("Form submission error:", error);
+                    }
+                });
+            </script>
+            

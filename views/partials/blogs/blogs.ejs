@@ -1,0 +1,56 @@
+ <!-- Breadcrumb Area  -->
+
+ <div class="breadcrumb-area pt-50">
+    <div class="container">
+        <div class="row">
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="/">Home</a></li>                          
+                    <li class="breadcrumb-item active" aria-current="page">Blog</li>
+                </ol>
+            </nav>
+        </div>
+    </div>
+</div>
+
+    <!-- Blog Page  -->
+
+    <div id="blog_page" class="hero-area">
+        <div class="container">      
+            <div class="row mt-40">
+                <% blogs.forEach(item => { %>
+                <div class="col-xl-4 col-lg-4 col-md-6 col-12">
+                    <hr>
+                    <div class="single-blog-item mt-30">
+                        <a href="blog-details?slug=<%= item.seoDetails.slug%>">
+                        <div class="blog-bg">
+                            <img src="<%= process.env.S3_BASE_URL + item.coverImage %>" alt="">
+                        </div>
+                        <div class="blog-content">                        
+                            <div class="blog-meta">
+                                <p><%= item.category %></p>
+                            </div>
+                            <h3><a href="blog-details?slug=<%= item.seoDetails.slug%>"><%= item.title %></a></h3>
+                            <div class="blog-info">
+                                <div class="blog-author">
+                                    <p><%= item.subTitle %></p>
+                                </div>
+                                <!-- <div class="blog-date">
+                                    <p>May 1, 2024</p>
+                                </div> -->
+                            </div>                            
+                        </div>       
+                    </a>                 
+                    </div>
+                </div>
+                <% }) %>
+                <!-- <ul class="pagination">                                        
+                    <li class="page-item"><a class="page-link" href="#"><i class="las la-arrow-left"></i></a></li>
+                    <li class="page-item active"><a class="page-link" href="#">1</a></li>
+                    <li class="page-item" aria-current="page"><a class="page-link" href="#">2</a></li>
+                    <li class="page-item"><a class="page-link" href="#">3</a></li>                                        
+                    <li class="page-item"><a class="page-link" href="#"><i class="las la-arrow-right"></i></a></li>                                        
+                </ul>      -->
+            </div>                 
+        </div>                
+    </div>

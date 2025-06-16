@@ -1,0 +1,82 @@
+<head>
+    <link rel="shortcut icon" href="/assets/images/fav/favicon.ico" />
+    <meta name="robots" content="noindex">
+
+</head>
+<div class="section">
+  <div>
+      <img src="/assets/images/404.svg" alt="404">
+  </div>
+  <a class="back-home" href="/" onclick="goToHomepage(event)">Go to Homepage</a>
+</div>
+
+<script>
+  function goToHomepage(event) {
+      event.preventDefault(); // Prevent default anchor behavior
+      window.location.href = "/"; // Always go to homepage
+  }
+</script>
+
+<style>
+  html, body {
+      margin: 0;
+      padding: 0;
+      text-align: center;
+      font-family: sans-serif;
+      background-color: white;
+  }
+
+  h1, a {
+      margin: 0;
+      padding: 0;
+      text-decoration: none;
+  }
+
+  .section {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+  }
+
+  .section .error {
+      font-size: 150px;
+      color: #008B62;
+      text-shadow: 
+          1px 1px 1px #00593E,    
+          2px 2px 1px #00593E,
+          3px 3px 1px #00593E,
+          4px 4px 1px #00593E,
+          5px 5px 1px #00593E,
+          6px 6px 1px #00593E,
+          7px 7px 1px #00593E,
+          8px 8px 1px #00593E,
+          25px 25px 8px rgba(0,0,0, 0.2);
+  }
+
+  .page {
+      margin: 2rem 0;
+      font-size: 20px;
+      font-weight: 600;
+      color: #444;
+  }
+
+  .back-home {
+      display: inline-block;
+      border: 2px solid #aa8453;
+      color: #fff;
+      text-transform: uppercase;
+      padding: 0.75rem 1rem 0.6rem;
+      transition: all 0.2s linear;
+      box-shadow: 0 15px 15px -11px rgba(0,0,0, 0.4);
+      background: #aa8453;
+      border-radius: 0px;
+      font-weight: 400;
+      font-family: "Barlow Condensed", sans-serif;
+  }
+
+  .back-home:hover {
+      background: #aa8453;
+      color: #ddd;
+  }
+</style>

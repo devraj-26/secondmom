@@ -1,0 +1,164 @@
+<%- include('partials/header1'), {pathPart} %> 
+<%- include('partials/whatsapp'), {pathPart} %>
+
+<br><br><br>
+<section class="color-section">
+    <div class="container">
+       <div class="col-lg-8 col-lg-offset-2">
+          <!-- Section heading -->
+          <div class="section-heading">
+             <h2 style="font-size: 41px; font-family: 'Lato', sans-serif;font-weight:blod;">Contact us</h2>
+          </div>
+       </div>
+       <!-- Contact -->
+      
+      
+       <div class="col-lg-10 col-lg-offset-1">
+          <!-- Form Starts -->
+          <form class="contact-form" id="contact_form" method="POST" action="<%= API_BASE_URL %>/website/service-enquiry/create-service-enquiry" novalidate>
+              
+              <div class="form-group row mb-0">
+                  <div class="col-md-6">
+                      <input type="text" name="<%= SERVICE_ENQUIRY_DYNAMIC_FIELDS_KEYS.CHILD_NAME %>" class="form-control input-field" placeholder="Child Name" required="" style="font-family: 'Lato', sans-serif;">
+                  </div>
+                  <div class="col-md-6">
+                      <input type="number" name="<%= SERVICE_ENQUIRY_DYNAMIC_FIELDS_KEYS.CHILD_AGE %>" class="form-control input-field" placeholder="Child Age" required="" style="font-family: 'Lato', sans-serif;">
+                  </div>
+              </div>
+      
+              <div class="form-group row mb-3">
+                  <div class="col-md-6">
+                      <input type="text" name="<%= SERVICE_ENQUIRY_DYNAMIC_FIELDS_KEYS.PARENT_NAME %>" class="form-control input-field" placeholder="Parent's Name" required="" style="font-family: 'Lato', sans-serif;">
+                  </div>
+                  <div class="col-md-6">
+                      <select id="serviceType" name="<%= SERVICE_ENQUIRY_DYNAMIC_FIELDS_KEYS.SERVICE_TYPE %>" class="form-control required" style="font-family: 'Lato', sans-serif;">
+                          <option value="" disabled selected>Program Interested In</option>
+                          <!-- <option value="Pre-Nursery">Pre-Nursery</option> -->
+                          <option value="Infant care">Infant care</option>
+                                    <option value="Young Toddlers">Young Toddlers</option>
+                                    <option value="Older Toddlers">Older Toddlers</option>
+                      </select>
+                  </div>
+              </div>
+      
+              <div class="form-group row mb-3">
+                  <div class="col-md-6">
+                      <input type="email" name="<%= SERVICE_ENQUIRY_DYNAMIC_FIELDS_KEYS.EMAIL %>" class="form-control input-field" placeholder="Email ID" required="" style="font-family: 'Lato', sans-serif;">
+                  </div>
+                  <div class="col-md-6">
+                      <input type="text" name="<%= SERVICE_ENQUIRY_DYNAMIC_FIELDS_KEYS.CONTACT_NO %>" required class="form-control required" placeholder="Contact No." style="font-family: 'Lato', sans-serif;">
+                  </div>
+              </div>
+      
+              <div class="form-group row mb-3">
+                <div class="col-md-12">
+                    <textarea name="<%= SERVICE_ENQUIRY_DYNAMIC_FIELDS_KEYS.REMARKS %>" 
+                              class="form-control input-field" 
+                              placeholder="Remarks" 
+                              style="height: 100px; font-family: 'Lato', sans-serif;"></textarea>
+                </div>
+            </div>
+            
+      
+              <button type="submit" id="submit_btn" value="Submit" class="btn center-block" style="margin-top: 30px !important; font-family: 'Lato', sans-serif;">Send message</button>
+          </form>
+          <!-- Contact results -->
+          <div id="contact_results"></div>
+      </div>
+      
+      <style>
+        body {
+            font-family: 'Lato', sans-serif;
+        }
+        .form-group {
+            margin-bottom: 8px !important; /* Reduced gap */
+        }
+
+        .form-group:last-child {
+            margin-bottom: 8px !important;
+        }
+
+        textarea[name="<%= SERVICE_ENQUIRY_DYNAMIC_FIELDS_KEYS.REMARKS %>"] {
+            height: 100px;
+        }
+
+        #submit_btn {
+            display: block;
+            margin: 30px auto 0;
+        }
+      </style>
+    </div>
+    
+    <script>
+        // Define constants in JavaScript from Node.js backend (EJS variables)
+        const SERVICE_ENQUIRY_DYNAMIC_FIELDS_KEYS = <%- JSON.stringify(SERVICE_ENQUIRY_DYNAMIC_FIELDS_KEYS) %>;
+    
+        // Ensure `websiteID` is retrieved correctly
+        const websiteID = "<%= websiteID ? websiteID : '' %>";
+        const WEBSITE_ID_KEY = "<%= WEBSITE_ID_KEY ? WEBSITE_ID_KEY : 'websiteProjectId' %>";
+    
+        console.log("Website ID:", websiteID);  // Debugging log to check if it's available
+    
+        document.getElementById('contact_form').addEventListener('submit', async function (e) {
+            e.preventDefault();  // Prevent the default form submission
+            const form = e.target;
+    
+            // Validate required fields
+            if (!form.checkValidity()) {
+                displayAlert("Please fill out all required fields.", "error");
+                return;
+            }
+    
+            try {
+                const classSelected = form.querySelector(`select[name="${SERVICE_ENQUIRY_DYNAMIC_FIELDS_KEYS.SERVICE_TYPE}"]`).value;
+    
+                const payload = {
+                    [SERVICE_ENQUIRY_DYNAMIC_FIELDS_KEYS.CHILD_NAME]: form.querySelector(`input[name="${SERVICE_ENQUIRY_DYNAMIC_FIELDS_KEYS.CHILD_NAME}"]`).value,
+                    [SERVICE_ENQUIRY_DYNAMIC_FIELDS_KEYS.CHILD_AGE]: form.querySelector(`input[name="${SERVICE_ENQUIRY_DYNAMIC_FIELDS_KEYS.CHILD_AGE}"]`).value,
+                    [SERVICE_ENQUIRY_DYNAMIC_FIELDS_KEYS.PARENT_NAME]: form.querySelector(`input[name="${SERVICE_ENQUIRY_DYNAMIC_FIELDS_KEYS.PARENT_NAME}"]`).value,
+                    [SERVICE_ENQUIRY_DYNAMIC_FIELDS_KEYS.CONTACT_NO]: form.querySelector(`input[name="${SERVICE_ENQUIRY_DYNAMIC_FIELDS_KEYS.CONTACT_NO}"]`).value,
+                    [SERVICE_ENQUIRY_DYNAMIC_FIELDS_KEYS.EMAIL]: form.querySelector(`input[name="${SERVICE_ENQUIRY_DYNAMIC_FIELDS_KEYS.EMAIL}"]`).value,
+                    [SERVICE_ENQUIRY_DYNAMIC_FIELDS_KEYS.REMARKS]: form.querySelector(`textarea[name="${SERVICE_ENQUIRY_DYNAMIC_FIELDS_KEYS.REMARKS}"]`)?.value || "",
+                    [SERVICE_ENQUIRY_DYNAMIC_FIELDS_KEYS.SERVICE_TYPE]: classSelected,
+                    [WEBSITE_ID_KEY]: websiteID  // Ensure it's correctly set
+                };
+    
+                console.log("Payload before sending:", payload);  // Debugging log to check payload before submission
+    
+                const response = await fetch(form.action, {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify(payload),
+                });
+    
+                if (!response.ok) {
+                    throw new Error(`HTTP error! Status: ${response.status}`);
+                }
+                form.reset();
+
+                // Redirect to Thank You page after successful submission
+                window.location.href = "/thank-you"; // Update this path if needed
+            } catch (error) {
+                displayAlert("Form not submitted! Please try again.", "error");
+                console.error("Form submission error:", error);
+            }
+        });
+    
+        // Custom alert function
+        function displayAlert(message, type) {
+            const alertBox = document.createElement("div");
+            alertBox.className = `custom-alert ${type}`;
+            alertBox.textContent = message;
+            document.body.appendChild(alertBox);
+    
+            setTimeout(() => {
+                alertBox.remove();
+            }, 3000);
+        }
+    </script>
+    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d150!2d73.1391358!3d22.2957852!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x395fc74bd84c7863%3A0x53de2efd8f7cffc!2sSecondMom%20Child%20Care%20Private%20Limited!5e0!3m2!1sen!2sin!4v1749921600!5m2!1sen!2sin" width="100%" height="450" style="border:0;" allowfullscreen="" loading="lazy" title="map"></iframe>
+    <!-- /container-->
+ </section>
+ <!--Section ends -->
+
+<%- include('partials/footer'), {pathPart} %>

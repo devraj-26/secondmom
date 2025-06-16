@@ -1,0 +1,334 @@
+<%- include('partials/header1'), {pathPart} %>
+<%- include('partials/whatsapp'), {pathPart} %>
+
+
+<br><br><br><br>
+<style>
+
+
+@media (min-width: 768px) {              
+            
+        .button-group.filter-button-group{
+      margin-left: 180px !important;
+    }
+    }
+
+    /* @media (max-width: 768px ) {              
+
+
+    .gallery-grid {
+    column-count: 3;
+    column-gap: 30px;
+    margin-bottom: 30px;
+    width: 93%;
+    margin-left: 25px !important;
+    margin-right: 20px !important;
+}
+} */
+    
+    
+
+    section .container, section .container-fluid {
+    padding-top: 50px;
+    padding-bottom: 0px !important;
+    /* padding-right: 20px; */
+}
+    /* .section-padding {
+        padding: 7% 0;
+        
+    } */
+    .fix {
+        overflow: visible !important;
+    }
+
+    /* Button Styling */
+    .button-group.filter-button-group {
+        margin-bottom: 20px;
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 10px;
+    }
+    .btn-filter {
+        padding: 10px 20px;
+        border: none;
+        background: #d91c8a;
+        color: white;
+        font-weight: bold;
+        border-radius: 20px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        box-shadow: 3px 3px 5px rgba(0, 0, 0, 0.2);
+    }
+    .btn-filter:hover {
+        background: #ffd700;
+        color: #333;
+    }
+    .btn-filter.active {
+        background: #333;
+        color: #fff;
+    }
+    section .container{
+    margin-left: 7% !important;
+    margin-top: 0% !important;
+}
+
+    /* Custom Masonry Layout */
+    .gallery-grid {
+    column-count: 3;
+    column-gap: 30px; /* Keeps horizontal gap at 25px */
+    /* margin-bottom: 30px; */
+    width: 115%;
+    margin-left: 0px !important;
+    margin-right: 25px !important;
+}
+
+.gallery-grid img, 
+.gallery-grid .gallery-item { 
+    margin-bottom: 20px; /* Adds vertical gap */
+    break-inside: avoid; /* Prevents items from breaking awkwardly */
+}
+
+    .filter-item {
+        width: 100%;
+        display: inline-block;
+        margin-bottom: 15px;
+        break-inside: avoid;
+    }
+    .project-item img {
+        width: 100%;
+        border-radius: 8px;
+        transition: transform 0.3s ease;
+        cursor: pointer;
+    }
+    .project-item:hover img {
+        transform: scale(1.05);
+    }
+
+    /* Custom Lightbox */
+    #customLightbox {
+        position: fixed;
+        top: 5%;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.9);
+        display: none;
+        align-items: center;
+        justify-content: center;
+        z-index: 9999;
+        flex-direction: column;
+    }
+    #lightboxContent {
+        position: relative;
+        text-align: center;
+    }
+    #lightboxImg {
+        max-width: 80%;
+        height: 580px !important;
+        border-radius: 8px;
+        object-fit: contain;
+    }
+
+    /* Image Counter */
+    #imageCounter {
+        position: absolute;
+        bottom: 10px;
+        right: 20px;
+        color: white;
+        font-size: 14px;
+        /* font-weight: bold; */
+    }
+
+    /* Close Button */
+   /* Close Button */
+#closeBtn {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    font-size: 30px;
+    color: white;
+    background: transparent; /* Removed black shadow */
+    border: none;
+    cursor: pointer;
+    padding: 10px 15px;
+    border-radius: 50%;
+    line-height: 1;
+    z-index: 99999;
+}
+#closeBtn:hover {
+    background: transparent;
+}
+
+
+    /* Navigation Buttons */
+    .lightbox-btn {
+        font-size: 30px;
+        color: #fff;
+        background: rgba(0, 0, 0, 0.5);
+        border: none;
+        cursor: pointer;
+        padding: 10px 15px;
+        border-radius: 50%;
+        line-height: 1;
+        transition: background 0.3s ease;
+        z-index: 99999;
+        pointer-events: auto; /* Ensure buttons are clickable */
+    }
+    .lightbox-btn:hover {
+        background: rgba(255, 255, 255, 0.3);
+    }
+
+    /* Navigation Controls */
+    .controls {
+        position: fixed;
+        top: 50%;
+        left: 0;
+        right: 0;
+        transform: translateY(-50%);
+        display: flex;
+        justify-content: space-between;
+        padding: 0 20px;
+    }
+
+    @media (max-width: 768px) {
+    .section .container{
+        margin-left: 3% !important;
+    }
+    
+.gallery-grid img, 
+.gallery-grid .gallery-item { 
+    margin-bottom: 0px; /* Adds vertical gap */
+    break-inside: avoid; /* Prevents items from breaking awkwardly */
+}
+
+    .gallery-grid {
+    column-count: 2;
+    column-gap: 10px; 
+    margin-bottom: 30px;
+    width: 93%;
+    margin-left: 0px !important;
+    margin-right: 20px !important;
+}
+
+.button-group.filter-button-group{
+margin-right: 20px;}
+}
+
+
+
+</style>
+
+<main>
+    <section class="section-team-1 section-padding">
+        <div class="container">
+            <div class="text-center mt-6">
+                <div class="button-group filter-button-group">
+                    <button class="btn-filter active" data-filter="*">All Media</button>
+                    <% galleryTitles?.forEach(item => { %>
+                        <% if (imageGalleries?.some(gallery => gallery._id === item._id && gallery.mediaDetails?.mediaType === 'IMAGE')) { %>
+                            <button class="btn-filter" data-filter=".<%= item?._id %>"><%= item?.title %></button>
+                        <% } %>
+                    <% }) %>
+                </div>
+            </div>
+        </div>
+
+        <div class="container mt-6">
+            <div class="gallery-grid">
+                <% imageGalleries?.forEach(item => { %>
+                    <% if (item?.mediaDetails?.mediaType === 'IMAGE') { %>
+                        <% item?.mediaDetails?.images.forEach(image => { %>
+                            <div class="filter-item <%= item._id %>">
+                                <div class="project-item">
+                                    <a href="#" class="gallery-item" data-image="<%= process.env.S3_BASE_URL + image %>">
+                                        <img src="<%= process.env.S3_BASE_URL + image %>" alt="gallery-images" />
+                                    </a>
+                                </div>
+                            </div>
+                        <% }) %>
+                    <% } %>
+                <% }) %>
+            </div>
+        </div>
+
+        <!-- Custom Lightbox -->
+        <div id="customLightbox" tabindex="-1">
+            <div id="lightboxContent">
+                <button id="closeBtn">&times;</button>
+                <img id="lightboxImg" src="" alt="Popup Image">
+                <div id="imageCounter"></div>
+                <div class="controls">
+                    <button id="prevBtn" class="lightbox-btn">&#10094;</button>
+                    <button id="nextBtn" class="lightbox-btn">&#10095;</button>
+                </div>
+            </div>
+        </div>
+
+        <script>
+            document.addEventListener("DOMContentLoaded", function () {
+                // Album Filteration Fix
+                const filterButtons = document.querySelectorAll(".btn-filter");
+                const filterItems = document.querySelectorAll(".filter-item");
+
+                filterButtons.forEach(button => {
+                    button.addEventListener("click", function () {
+                        filterButtons.forEach(btn => btn.classList.remove("active"));
+                        this.classList.add("active");
+
+                        const filterValue = this.getAttribute("data-filter");
+
+                        filterItems.forEach(item => {
+                            if (filterValue === "*" || item.classList.contains(filterValue.substring(1))) {
+                                item.style.display = "inline-block";
+                            } else {
+                                item.style.display = "none";
+                            }
+                        });
+                    });
+                });
+
+                // Lightbox Functionality Fix
+                const galleryItems = document.querySelectorAll(".gallery-item");
+                const lightbox = document.getElementById("customLightbox");
+                const lightboxImg = document.getElementById("lightboxImg");
+                const closeBtn = document.getElementById("closeBtn");
+                const prevBtn = document.getElementById("prevBtn");
+                const nextBtn = document.getElementById("nextBtn");
+                const imageCounter = document.getElementById("imageCounter");
+                let currentIndex = 0;
+                let images = [];
+
+                galleryItems.forEach((item, index) => {
+                    images.push(item.dataset.image);
+                    item.addEventListener("click", function (e) {
+                        e.preventDefault();
+                        currentIndex = index;
+                        updateLightbox();
+                        lightbox.style.display = "flex";
+                        lightbox.focus();
+                    });
+                });
+
+                function updateLightbox() {
+                    lightboxImg.src = images[currentIndex];
+                    imageCounter.innerText = `${currentIndex + 1} of ${images.length}`;
+                }
+
+                closeBtn.addEventListener("click", () => lightbox.style.display = "none");
+                nextBtn.addEventListener("click", () => { currentIndex = (currentIndex + 1) % images.length; updateLightbox(); });
+                prevBtn.addEventListener("click", () => { currentIndex = (currentIndex - 1 + images.length) % images.length; updateLightbox(); });
+
+                document.addEventListener("keydown", (e) => {
+                    if (lightbox.style.display === "flex") {
+                        if (e.key === "ArrowRight") nextBtn.click();
+                        if (e.key === "ArrowLeft") prevBtn.click();
+                        if (e.key === "Escape") closeBtn.click();
+                    }
+                });
+            });
+        </script>
+    </section>
+</main>
+
+<%- include('partials/footer'), {pathPart} %>

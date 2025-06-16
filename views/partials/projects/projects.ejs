@@ -1,0 +1,66 @@
+    <!-- Breadcrumb Area  -->
+    <div class="breadcrumb-area white-bg">    
+        <div class="container">
+            <div class="row">
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="/">Home</a></li>                          
+                        <li class="breadcrumb-item"><a href="#">Projects</a></li>                                                    
+                    </ol>
+                </nav>
+            </div>
+            <div class="row justify-content-center mt-60">
+                <div class="col-lg-6 text-center">
+                    <div class="breadcrumb-title">
+                        <h1 class="text-dark">Project</h1>
+                    </div>
+                    <div class="breadcrumb-icon">
+                        <i class="las la-angle-down"></i>                    
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Project - Masonry -->
+
+    <div class="project-section section-padding pt-60">
+        <div class="container">            
+            <div id="project-masonry" class="project-masonry-standard" data-scroll-index="2">
+                <div class="container">           
+                    <div class="row text-lg-end mt-30">
+                        <ul id="menu-filter" class="project-menu mb-0">
+                            <li class="list-inline-item">
+                                <a class="active" data-filter="*">Show All</a>
+                            </li>
+                            <% projectType.forEach(item => { %>
+                            <li class="list-inline-item">
+                                <a class="" data-filter=".<%= item._id %>"><%= item.name %></a>
+                            </li>
+                            <% }) %> 
+                        </ul>
+                    </div>
+
+                    <% projects.forEach(item => { %>
+                    <div class="row project-filter mt-30">
+                       
+                        <div class="col-lg-4 col-md-6 project-item <%= item.projectType._id %> interior">
+                            <a href="project-details/<%= item.seoDetails.slug %>" class="img-zoom">
+                                <div class="project-box">
+                                    <div class="project-img">
+                                        <img src="<%= process.env.S3_BASE_URL + item.image %>" class="img-fluid mx-auto d-block" alt="" >
+                                    </div>
+                                    <div class="project-title">
+                                        <h3><%= item.title %></h3>
+                                        <h6><%= item.subTitle %></h6>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                       
+                    </div>
+                    <% }) %>
+                </div>
+            </div>
+        </div>
+     </div>

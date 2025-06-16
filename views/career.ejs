@@ -1,0 +1,214 @@
+<%- include('partials/header1'), {pathPart} %>
+<%- include('partials/whatsapp'), {pathPart} %>
+
+
+<br><br><br>
+<section id="contact" class="color-section">
+    <div class="container">
+       <div class="col-lg-8 col-lg-offset-2">
+          <!-- Section heading -->
+          <div class="section-heading">
+             <h2 style="font-size: 41px;">Career</h2>
+          </div>
+       </div>
+       
+      
+       <!-- Contact Form -->
+       <div class="col-lg-10 col-lg-offset-1">
+        <!-- Form Starts -->
+        <form id="career_form" method="POST" action="<%= API_BASE_URL %>/website/career-enquiry/create-career-enquiry" novalidate enctype="multipart/form-data">
+            
+            <div class="form-group row mb-2" style="margin-bottom: 7px;">
+                <div class="col-md-6">
+                    <input type="text" name="<%= CAREER_ENQUIRY_DYNAMIC_FIELDS_KEYS.NAME %>" 
+                        class="form-control input-field" placeholder="Name" required="" 
+                        style="height: 50px; font-size: 16px;">
+                </div>
+                <div class="col-md-6">
+                    <input type="tel" name="<%= CAREER_ENQUIRY_DYNAMIC_FIELDS_KEYS.PHONE %>" 
+                        class="form-control input-field" placeholder="Phone Number" required=""
+                        style="height: 50px; font-size: 16px;">
+                </div>
+            </div>
+    
+            <div class="form-group row mb-2" style="margin-bottom: 7px;">
+                <div class="col-md-6">
+                    <input type="email" name="<%= CAREER_ENQUIRY_DYNAMIC_FIELDS_KEYS.EMAIL %>" 
+                        class="form-control input-field" placeholder="Email" required="" 
+                        style="height: 50px; font-size: 16px;">
+                </div>
+                <div class="col-md-6">
+                    <input type="text" name="<%= CAREER_ENQUIRY_DYNAMIC_FIELDS_KEYS.QUALIFICATION %>" 
+                        class="form-control input-field" placeholder="Qualification" required=""
+                        style="height: 50px; font-size: 16px;">
+                </div>
+            </div>
+    
+            <div class="form-group row mb-2" style="margin-bottom: 7px;">
+                <div class="col-md-12">
+                    <input type="file" name="<%= CAREER_ENQUIRY_DYNAMIC_FIELDS_KEYS.RESUME %>" 
+                        class="form-control input-field" required="" 
+                        style="height: 50px; font-size: 16px;">
+                </div>
+            </div>
+    
+            <div class="form-group row mb-2">
+                <div class="col-md-12">
+                    <textarea name="<%= CAREER_ENQUIRY_DYNAMIC_FIELDS_KEYS.REMARKS %>" 
+                        class="form-control input-field" placeholder="Remarks" 
+                        style="height: 80px; font-size: 16px;"></textarea>
+                </div>
+            </div>
+    
+            <!-- Centered Button -->
+            <div class="text-center">
+                <button type="submit" id="submit_btn" value="Submit" 
+                    class="btn btn-primary" 
+                    style="margin-top: 12px !important;">
+                    Submit Request
+                </button>
+            </div>
+        </form>
+        <!-- Contact results -->
+        <div id="contact_results"></div>
+    </div>
+    </div>
+</section>
+
+<!-- Ensure full footer visibility -->
+<style>
+    /* Add padding to the bottom of the section to prevent footer overlap */
+    #contact {
+        padding-bottom: 40px; /* Adjust as needed based on footer height */
+    }
+    /* Ensure the body has enough space */
+    body {
+        margin-bottom: 80px; /* Adjust based on footer height */
+    }
+</style>
+
+<script>
+    // Define constants in JavaScript from Node.js backend (EJS variables)
+    const CAREER_ENQUIRY_DYNAMIC_FIELDS_KEYS = <%- JSON.stringify(CAREER_ENQUIRY_DYNAMIC_FIELDS_KEYS) %>;
+    const websiteID = "<%= websiteID ? websiteID : '' %>".trim();
+    const WEBSITE_ID_KEY = "<%= WEBSITE_ID_KEY ? WEBSITE_ID_KEY : 'websiteProjectId' %>";
+    const UPLOAD_FILES_END_POINT = `<%= API_BASE_URL %>/third-party/file-upload/upload-files`;
+    const CREATE_CAREER_ENQUIRY_END_POINT = `<%= API_BASE_URL %>/website/career-enquiry/create-career-enquiry`;
+
+    if (!websiteID) {
+        console.error("❌ Website ID is missing! Ensure it's properly set in EJS.");
+    } else {
+        console.log("✅ Website ID:", websiteID);
+    }
+
+    document.getElementById('career_form').addEventListener('submit', async function (e) {
+        e.preventDefault(); // Prevent default form submission
+
+        try {
+            const form = e.target;
+            const formData = new FormData(form);
+
+            // ✅ Upload resume first
+            const uploadFileData = new FormData();
+            const resumeFile = form.querySelector(`input[name="${CAREER_ENQUIRY_DYNAMIC_FIELDS_KEYS.RESUME}"]`).files[0];
+
+            if (resumeFile) {
+                uploadFileData.append("file", resumeFile);
+                console.log("📂 Uploading Resume...");
+                
+                const fileUploadResponse = await fetch(UPLOAD_FILES_END_POINT, {
+                    method: "POST",
+                    body: uploadFileData,
+                });
+
+                if (!fileUploadResponse.ok) {
+                    throw new Error(`Resume upload failed! Status: ${fileUploadResponse.status}`);
+                }
+
+                const fileUploadData = await fileUploadResponse.json();
+                const uploadedResume = fileUploadData?.data?.length > 0 ? fileUploadData?.data[0]?.imageNames[0] : "";
+
+                console.log("✅ Resume Uploaded:", uploadedResume);
+
+                // ✅ Create final payload
+                const payload = {
+                    [CAREER_ENQUIRY_DYNAMIC_FIELDS_KEYS.NAME]: formData.get(CAREER_ENQUIRY_DYNAMIC_FIELDS_KEYS.NAME),
+                    [CAREER_ENQUIRY_DYNAMIC_FIELDS_KEYS.EMAIL]: formData.get(CAREER_ENQUIRY_DYNAMIC_FIELDS_KEYS.EMAIL),
+                    [CAREER_ENQUIRY_DYNAMIC_FIELDS_KEYS.PHONE]: formData.get(CAREER_ENQUIRY_DYNAMIC_FIELDS_KEYS.PHONE),
+                    [CAREER_ENQUIRY_DYNAMIC_FIELDS_KEYS.QUALIFICATION]: formData.get(CAREER_ENQUIRY_DYNAMIC_FIELDS_KEYS.QUALIFICATION),
+                    [CAREER_ENQUIRY_DYNAMIC_FIELDS_KEYS.REMARKS]: formData.get(CAREER_ENQUIRY_DYNAMIC_FIELDS_KEYS.REMARKS) || "",
+                    [CAREER_ENQUIRY_DYNAMIC_FIELDS_KEYS.RESUME]: uploadedResume,
+                    [WEBSITE_ID_KEY]: websiteID,
+                };
+
+                console.log("📤 Sending Payload:", payload); // Debugging
+
+                const response = await fetch(CREATE_CAREER_ENQUIRY_END_POINT, {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify(payload),
+                });
+
+                if (!response.ok) {
+                    throw new Error(`HTTP error! Status: ${response.status}`);
+                }
+                form.reset();
+
+                console.log("✅ Form submitted successfully!");
+                window.location.href = "/thank-you";
+            } else {
+                throw new Error("❌ Resume file is missing!");
+            }
+        } catch (error) {
+            console.error("❌ Form submission error:", error);
+            alert("Form not submitted! Please try again.");
+        }
+    });
+</script>
+<section id="about">
+            <div class="container">
+               <div class="col-lg-8 col-lg-offset-2">
+                  <!-- Section heading -->
+                  <div class="section-heading">
+                     <h2 style="font-size: 41px;">Benefits</h2>
+                  </div>
+               </div>
+              
+               <!-- /row -->
+               <div class="row features">
+                  <!-- First Collumn -->
+                  <div class="col-lg-12 col-sm-12">
+                     <!-- item1 -->
+                     <div class="col-md-4 media text-center">
+                       <img src="/assets/about/protect.png" style="height:128px;padding: 23px;">
+                        <div class="media-body">
+                           <h5 class="media-heading">Staff child care</h5>
+                         
+                        </div>
+                     </div>
+                     <!-- item2 -->
+                     <div class="col-md-4 media text-center">
+                     <img src="/assets/about/medical-insurance.png" style="height:128px;padding: 23px;">
+                        <div class="media-body">
+                           <h5 class="media-heading">Medical insurance/ESI </h5>
+                          
+                        </div>
+                     </div>
+                     <!-- item3 -->
+                     <div class="col-md-4 media text-center">
+                     <img src="/assets/about/bonus.png" style="height:128px;padding: 23px;">
+                        <div class="media-body">
+                           <h5 class="media-heading">Bonus </h5>
+                         
+                        </div>
+                     </div>
+                    
+                  </div>
+                 
+               </div>
+               
+            </div>
+            <!--/container-->	  
+         </section>
+
+<%- include('partials/footer'), {pathPart} %>

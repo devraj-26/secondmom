@@ -1,0 +1,216 @@
+<%- include('partials/header1'), {pathPart} %>
+<%- include('partials/whatsapp'), {pathPart} %>
+
+
+<br><br><br>
+<style>
+    section .container, section .container-fluid {
+    padding-top: 0px !important;
+    padding-bottom: 0px !important;
+}
+    .section-padding {
+        padding: 0px 0 !important;
+    }
+    .fix {
+        overflow: visible !important;
+    }
+
+    /* Button styles */
+    .button-group.filter-button-group {
+        margin-bottom: 20px;
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 0px;
+    }
+    .btn-filter {
+        padding: 10px 20px;
+        margin: 5px;
+        border: none;
+        background: #d91c8a; /* Default pinkish color */
+        color: white;
+        font-weight: bold;
+        border-radius: 20px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        box-shadow: 3px 3px 5px rgba(0, 0, 0, 0.2);
+    }
+    .btn-filter:hover {
+        background: #ffd700; /* Yellowish on hover */
+        color: #333;
+    }
+    .btn-filter.active {
+        background: #333;
+        color: #fff;
+    }
+
+    /* Video grid layout */
+    .video-grid {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 15px !important;
+        justify-content: center;
+    }
+    .filter-item {
+        width: calc(33% - 15px); /* 3 columns with gap */
+        break-inside: avoid;
+        margin-left: 20px;
+        margin-top: 20px;
+    }
+    .video-card {
+        position: relative;
+        margin-bottom: 30px;
+        overflow: hidden;
+        background: #fff;
+        border-radius: 15px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        transition: transform 0.3s ease;
+        height: 260px; /* Fixed height for consistency */
+        display: flex;
+        flex-direction: column;
+        
+    }
+    .video-card:hover {
+        transform: scale(1.05);
+    }
+    .video-card img {
+        width: 100%;
+        height: 200px; 
+        object-fit: cover;
+        border-radius: 8px 8px 0 0;
+        cursor: pointer;
+    }
+    .video-card iframe {
+        width: 100%;
+        height: 200px; /* Matches thumbnail height */
+        border-radius: 8px 8px 0 0;
+    }
+    .video-card .title {
+        padding: 10px;
+        text-align: center;
+        font-weight: bold;
+        color: black; /* White text for contrast on soft black */
+        flex-grow: 1; /* Ensures title takes remaining space */
+    }
+
+    .button-group.filter-button-group {
+        margin-bottom: -10px !important;
+    }
+
+    section .container, section .container-fluid {
+        margin-top: 20px !important;
+        margin-bottom: 20px !important;
+    padding-top: 50px !important;
+    padding-bottom: -20px !important;
+}
+
+@media (max-width: 768px) {
+    .filter-item {
+        width: calc(50% - 15px); /* 2 columns with gap */
+        margin-left: 10px;
+        margin-top: 15px;
+    }
+}
+
+@media (max-width: 480px) {
+    .filter-item {
+        width: 100%; /* Makes each card take full width */
+        margin-left: 0;
+    }
+}
+
+</style>
+
+<main>
+    <section class="section-team-1 section-padding">
+        <div class="container">
+            <div class="text-center mt-6">
+                <div class="button-group filter-button-group">
+                    <button class="btn-filter active" data-filter="*">All Videos</button>
+                    <!-- Video tabs will be populated dynamically -->
+                </div>
+            </div>
+        </div>
+
+        <div class="container mt-6">
+            <div class="video-grid">
+                <!-- Video items will be populated dynamically -->
+            </div>
+        </div>
+
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.isotope/3.0.6/isotope.pkgd.min.js"></script>
+
+        <script>
+            $(document).ready(function () {
+                var $grid = $('.video-grid').isotope({
+                    itemSelector: '.filter-item',
+                    layoutMode: 'masonry'
+                });
+
+                // Function to extract YouTube video ID from URL
+                function getYouTubeId(url) {
+                    const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=)([^#\&\?]*).*/;
+                    const match = url.match(regExp);
+                    return (match && match[2].length === 11) ? match[2] : null;
+                }
+
+                // Fetch video data from API
+                $.getJSON('https://api.webbuilder.technolitics.com/api/v1/website-builder/website/gallery/get-all-galleries/67cf8e0aec284e3110e1d6bc', function (response) {
+                    if (response.message === "Data retrieved successfully") {
+                        var galleryData = response.data;
+
+                        // Filter only video items
+                        var videoData = galleryData.filter(item => item.mediaDetails.mediaType === 'VIDEO');
+
+                        // Populate filter buttons dynamically for videos
+                        videoData.forEach(function (item) {
+                            $('.filter-button-group').append(
+                                `<button class="btn-filter" data-filter=".${item._id}">${item.title}</button>`
+                            );
+                        });
+
+                        // Populate video grid dynamically with thumbnails
+                        videoData.forEach(function (item) {
+                            var videoId = getYouTubeId(item.mediaDetails.videoLink);
+                            var thumbnailUrl = videoId ? `https://img.youtube.com/vi/${videoId}/hqdefault.jpg` : 'https://via.placeholder.com/300x200?text=Video+Thumbnail';
+                            var embedUrl = videoId ? `https://www.youtube.com/embed/${videoId}` : item.mediaDetails.videoLink;
+
+                            $('.video-grid').append(
+                                `<div class="filter-item ${item._id}">
+                                    <div class="video-card" data-video-url="${embedUrl}">
+                                        <img src="${thumbnailUrl}" alt="${item.title}" />
+                                        <div class="title">${item.title}</div>
+                                    </div>
+                                </div>`
+                            );
+                        });
+
+                        // Re-initialize Isotope after adding items
+                        $grid.isotope('reloadItems').isotope();
+
+                        // Click handler to replace thumbnail with iframe
+                        $('.video-card').on('click', function () {
+                            var $card = $(this);
+                            var videoUrl = $card.data('video-url');
+                            $card.html(
+                                `<iframe src="${videoUrl}" frameborder="0" allowfullscreen></iframe>
+                                <div class="title">${$card.find('.title').text()}</div>`
+                            );
+                        });
+                    }
+                });
+
+                // Filter button click handler
+                $('.filter-button-group').on('click', '.btn-filter', function () {
+                    var filterValue = $(this).attr('data-filter');
+                    $grid.isotope({ filter: filterValue });
+                    $('.btn-filter').removeClass('active');
+                    $(this).addClass('active');
+                });
+            });
+        </script>
+    </section>
+</main>
+
+<%- include('partials/footer'), {pathPart} %>

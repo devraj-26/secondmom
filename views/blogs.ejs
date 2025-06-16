@@ -1,0 +1,184 @@
+<%- include('partials/header1'), {pathPart} %>
+<%- include('partials/whatsapp'), {pathPart} %>
+
+
+<main>
+    <!-- Blog 2 (Excluding EVENT category) -->
+    <br><br><br><br><br><br> <br>  
+    <section style="background-color: #fff7ed;">
+        <div class="container">
+           <!-- Section Heading -->
+           <div class="section-heading">
+              <h2 style="font-size: 41px;">Updates</h2>
+           </div>
+           <!-- Carousel -->
+           <div class="row">
+              <div class="col-md-12" style="margin-bottom: 0px !important;">
+                 <!-- Blog item 1 -->
+                                      <!-- /blog-preview -->
+                
+                 <!-- Blog item 5 -->
+                
+                 <!-- /blog-preview -->
+                 
+              </div>
+              <!-- /owl-blog -->
+           </div>
+           <!-- /row -->
+        </div>
+        <!-- /container -->
+     </section>
+     <!-- Section ends -->
+    
+     
+    <!-- <section class="section-blog-2 position-relative section-padding fix"> 
+        <div class="container position-relative z-1">
+            <div class="row">
+                
+                <div class="col-lg-8">
+                    <div class="row">
+                        <div class="swiper slider-one p-2 mt-lg-0 mt-5">
+                            <div class="swiper-wrapper">
+                                <% posts.filter(item => item.category !== "EVENT").forEach(item => { 
+                                    const date = new Date(item.createdAt);
+                                    const formattedDate = `${date.getDate().toString().padStart(2, '0')}-${date.toLocaleString('en', { month: 'short' })}-${date.getFullYear()}`;
+                                %>
+                                <div class="swiper-slide">
+                                    <div class="card border-0 position-relative rounded-3 d-inline-flex card-hover shadow-2" style="height: 616px;">
+                                        <img class="rounded-top-3" src="<%= process.env.S3_BASE_URL + item.banner.image %>" alt="infinia">
+                                        <a href="blog-details/<%= item.seoDetails.slug %>" class="position-absolute z-1 m-3 bg-primary-soft border border-2 border-white d-inline-flex rounded-pill px-3 py-1">
+                                            <span class="tag-spacing fs-7 fw-bold text-linear-2 ms-2 text-uppercase">Business</span>
+                                        </a>
+                                        <div class="card-body bg-white border border-top-0 rounded-bottom-3 p-6">
+                                            <h6 class="mb-3"><%= item.title.length > 70 ? item.title.substring(0, 70) + '...' : item.title %></h6>
+                                            <p><%= item.description.replace(/<[^>]*>/g, '').length > 115 ? item.description.replace(/<[^>]*>/g, '').substring(0, 115) + '...' : item.description.replace(/<[^>]*>/g, '') %></p>
+                                            <div class="d-flex align-items-center justify-content-between mt-5 pt-5 border-top">
+                                                <div class="d-flex align-items-center">
+                                                    <div class="ms-3">
+                                                        <h6 class="fs-7 m-0 mb-1">Explore more</h6>
+                                                    </div>
+                                                </div>
+                                                <div class="icon-shape icon-md bg-white rounded-circle border">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="25" viewBox="0 0 24 25" fill="none">
+                                                        <path d="M17.25 15.5322V7.03223H8.75" stroke="#6D4DF2" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                                                        <path d="M17 7.28223L6.75 17.5322" stroke="#6D4DF2" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                                                    </svg>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <a href="blog-details/<%= item.seoDetails.slug %>" class="position-absolute bottom-0 start-0 end-0 top-0 z-0"></a>
+                                    </div>
+                                </div>
+                                <% }); %>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section> -->
+        <section class="section-blog-2 position-relative section-padding fix" style="background-color: #fff7ed;">
+            <div class="container">
+                <div class="blog-card-container">
+                    <% posts.filter(item => item.category !== "EVENT").reverse().forEach(item => { 
+                        const imageUrl = `${process.env.S3_BASE_URL + item.banner.image}`;
+                    %>
+                    <div class="blog-card" >
+                        <img src="<%= imageUrl %>" alt="blog image" style="object-fit: cover;">
+                        <h6 class="blog-title">
+                            <a href="blog/<%= item.seoDetails.slug %>">
+                                <%= item.title.length > 70 ? item.title.substring(0, 70) + '...' : item.title %>
+                            </a>
+                        </h6>
+                    </div>
+                    <% }); %>
+                </div>
+            </div>
+        </section>
+        <style>
+            <style>
+    .blog-card {
+        transition: all 0.3s ease-in-out; /* Smooth transition effect */
+    }
+
+    .blog-card:hover {
+        transform: translateY(-5px); /* Slight lift effect */
+        box-shadow: 0px 6px 15px rgba(0, 0, 0, 0.15); /* Softer shadow */
+    }
+
+    .blog-title a {
+        transition: color 0.3s ease-in-out; /* Smooth color transition */
+        text-decoration: none;
+        color: inherit; /* Maintain default color */
+    }
+
+    .blog-card:hover .blog-title a {
+        color: #e49b1c; /* Change title text color on hover */
+    }
+</style>
+
+        </style>
+        <style>
+            .blog-card-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center; /* Aligns cards from the left */
+    gap: 30px;
+    /* padding-left: 170px;  */
+    /* padding-right: 170px;  */
+    max-width: 100%;
+    margin-bottom: 30px;
+}
+
+.blog-card {
+    width: 365px !important;
+    height: 380px !important;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: start;
+    background: white;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+    border-radius: 30px;
+    overflow: hidden;
+    flex: 0 0 calc(33.33% - 30px); /* Ensures 3 cards per row with 30px gap */
+}
+
+.blog-card img {
+    width: 100%;
+    height: 250px;
+    object-fit: cover;
+}
+
+.blog-title {
+    text-align: center;
+    padding: 15px;
+    font-size: 18px;
+    font-weight: bold;
+}
+
+/* Ensure container takes full width */
+.container {
+    max-width: 100%;
+}
+
+section .container{
+    padding-bottom: 0px !important;
+    padding-top: 0px !important;
+    /* padding-bottom: 100px; */
+
+}
+
+@media (max-width: 480px) {
+    .blog-card {
+        flex: 0 0 100%; /* Makes each card take full width */
+        width: 100% !important;
+    }
+}
+
+
+
+        </style>
+        
+    </main>
+
+    <%- include('partials/footer'), {pathPart} %>
