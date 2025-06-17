@@ -1147,7 +1147,7 @@
     <!-- Carousel -->
     <div class="row color_block">
       <div id="owl-blog" class="owl-carousel owl-theme">
-        <% posts.filter(item => item.category !== "EVENT").forEach(item => { 
+        <% posts.filter(item => item.category !== "EVENT").reverse().forEach(item => { 
           const date = new Date(item.createdAt);
           const formattedDate = `${date.getFullYear()}-${(date.getMonth() + 1).toString().padStart(2, '0')}-${date.getDate().toString().padStart(2, '0')}`;
           const imageUrl = `${process.env.S3_BASE_URL + item.banner.image}`;
