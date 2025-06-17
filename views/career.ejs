@@ -108,11 +108,7 @@
     const UPLOAD_FILES_END_POINT = `<%= API_BASE_URL %>/third-party/file-upload/upload-files`;
     const CREATE_CAREER_ENQUIRY_END_POINT = `<%= API_BASE_URL %>/website/career-enquiry/create-career-enquiry`;
 
-    if (!websiteID) {
-        console.error("❌ Website ID is missing! Ensure it's properly set in EJS.");
-    } else {
-        console.log("✅ Website ID:", websiteID);
-    }
+   
 
     document.getElementById('career_form').addEventListener('submit', async function (e) {
         e.preventDefault(); // Prevent default form submission
