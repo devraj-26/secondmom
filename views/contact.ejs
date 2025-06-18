@@ -14,7 +14,40 @@
       
       
        <div class="col-lg-10 col-lg-offset-1">
-          <!-- Form Starts -->
+            <!-- Contact Information -->
+            <div class="contact-info-section">
+                <div class="contact-info-box">
+                    <h4><i class="fa fa-info-circle"></i> Contact Information</h4>
+                    <div class="contact-grid">
+                        <div class="contact-item">
+                            <i class="fa fa-envelope"></i>
+                            <a href="mailto:info@secondmom.in">info@secondmom.in</a>
+                        </div>
+                        <div class="contact-item">
+                            <i class="fa fa-envelope"></i>
+                            <a href="mailto:manoj.gupta@secondmom.in">manoj.gupta@secondmom.in</a>
+                        </div>
+                        <div class="contact-item">
+                            <i class="fa fa-whatsapp"></i>
+                            <a href="https://api.whatsapp.com/send?phone=+918733848886&amp;text=Hello,Welcome to SecondMom! Looking for instant help...? Connect here on Whatsapp">Help line: +91 87338 48886</a>
+                        </div>
+                        <div class="contact-item">
+                            <i class="fa fa-phone"></i>
+                            <span>For Enquiry: <a href="tel:+91 9033276276">+91 9033276276</a></span>
+                        </div>
+                        <div class="contact-item">
+                            <i class="fa fa-phone"></i>
+                            <span>Feedback & complaints: <a href="tel:+91 9033033116">+91 9033033116</a></span>
+                        </div>
+                        <div class="contact-item">
+                            <i class="fa fa-map-marker"></i>
+                            <p>Plot no 5, Deep Bunglows near Punchmukhi Hanuman temple, Vasna Bhayli Road, Vadodara, 390 015</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Form Starts -->
           <form class="contact-form" id="contact_form" method="POST" action="<%= API_BASE_URL %>/website/service-enquiry/create-service-enquiry" novalidate>
               
               <div class="form-group row mb-0">
@@ -71,11 +104,11 @@
             font-family: 'Lato', sans-serif;
         }
         .form-group {
-            margin-bottom: 8px !important; /* Reduced gap */
+            margin-bottom: 15px !important; /* Match grid gap */
         }
 
         .form-group:last-child {
-            margin-bottom: 8px !important;
+            margin-bottom: 15px !important;
         }
 
         textarea[name="<%= SERVICE_ENQUIRY_DYNAMIC_FIELDS_KEYS.REMARKS %>"] {
@@ -85,6 +118,152 @@
         #submit_btn {
             display: block;
             margin: 30px auto 0;
+        }
+
+        /* Simple Contact Information Styling */
+        .contact-info-section {
+            margin-bottom: 40px;
+        }
+
+        .contact-info-box {
+            background: #fff7ed;
+            border: 1px solid #d91c8a;
+            border-radius: 8px;
+            padding: 25px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .contact-info-box h4 {
+            color: #34327c;
+            font-family: 'Lato', sans-serif;
+            font-weight: 700;
+            font-size: 18px;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #d91c8a;
+            text-align: center;
+        }
+
+        .contact-info-box h4 i {
+            color: #d91c8a;
+            margin-right: 8px;
+        }
+
+        .contact-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+            font-family: 'Lato', sans-serif;
+        }
+
+        .contact-item {
+            display: flex;
+            align-items: flex-start;
+            padding: 12px;
+            border-radius: 6px;
+            background: rgba(217, 28, 138, 0.05);
+            transition: background-color 0.3s ease;
+        }
+
+        .contact-item:hover {
+            background: rgba(217, 28, 138, 0.1);
+        }
+
+        .contact-item i {
+            color: #d91c8a;
+            margin-right: 12px;
+            width: 16px;
+            text-align: center;
+            font-size: 16px;
+            margin-top: 2px;
+            flex-shrink: 0;
+        }
+
+        .contact-item a {
+            color: #34327c;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s ease;
+            font-size: 14px;
+        }
+
+        .contact-item a:hover {
+            color: #d91c8a;
+        }
+
+        .contact-item span {
+            color: #34327c;
+            font-weight: 500;
+            font-size: 14px;
+        }
+
+        .contact-item p {
+            color: #34327c;
+            font-weight: 500;
+            margin: 0;
+            line-height: 1.5;
+            font-size: 14px;
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            .contact-grid {
+                grid-template-columns: 1fr;
+                gap: 12px;
+            }
+
+            .contact-item {
+                padding: 10px;
+            }
+
+            .contact-item i {
+                font-size: 14px;
+                margin-right: 10px;
+            }
+
+            .contact-item a,
+            .contact-item span,
+            .contact-item p {
+                font-size: 13px;
+            }
+
+            .form-group {
+                margin-bottom: 12px !important; /* Match grid gap on tablet */
+            }
+            
+            .form-group:last-child {
+                margin-bottom: 12px !important;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .contact-grid {
+                gap: 10px;
+            }
+
+            .contact-item {
+                padding: 8px;
+            }
+
+            .contact-item i {
+                font-size: 13px;
+                margin-right: 8px;
+            }
+
+            .contact-item a,
+            .contact-item span,
+            .contact-item p {
+                font-size: 12px;
+            }
+
+            .form-group {
+                margin-bottom: 0px !important; /* Match grid gap on mobile */
+            }
+            
+            .form-group:last-child {
+                margin-bottom: 10px !important;
+            }
         }
       </style>
     </div>
