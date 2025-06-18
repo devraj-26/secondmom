@@ -9,7 +9,8 @@
 @media (min-width: 768px) {              
             
         .button-group.filter-button-group{
-      margin-left: 180px !important;
+      margin-left: 0 !important;
+      justify-content: center;
     }
     }
 
@@ -31,7 +32,8 @@
     section .container, section .container-fluid {
     padding-top: 50px;
     padding-bottom: 0px !important;
-    /* padding-right: 20px; */
+    margin: 0 auto !important;
+    text-align: center;
 }
     /* .section-padding {
         padding: 7% 0;
@@ -48,6 +50,8 @@
         flex-wrap: wrap;
         justify-content: center;
         gap: 10px;
+        margin-left: 0 !important;
+        margin-right: 0 !important;
     }
     .btn-filter {
         padding: 10px 20px;
@@ -69,24 +73,23 @@
         color: #fff;
     }
     section .container{
-    margin-left: 7% !important;
-    margin-top: 0% !important;
+    margin: 0 auto !important;
+    text-align: center;
 }
 
     /* Custom Masonry Layout */
     .gallery-grid {
     column-count: 3;
-    column-gap: 30px; /* Keeps horizontal gap at 25px */
-    /* margin-bottom: 30px; */
-    width: 115%;
-    margin-left: 0px !important;
-    margin-right: 25px !important;
+    column-gap: 30px;
+    width: 100%;
+    margin: 0 auto !important;
+    max-width: 1200px;
 }
 
 .gallery-grid img, 
 .gallery-grid .gallery-item { 
-    margin-bottom: 20px; /* Adds vertical gap */
-    break-inside: avoid; /* Prevents items from breaking awkwardly */
+    margin-bottom: 20px;
+    break-inside: avoid;
 }
 
     .filter-item {
@@ -174,6 +177,7 @@
         transition: background 0.3s ease;
         z-index: 99999;
         pointer-events: auto; /* Ensure buttons are clickable */
+        margin-top: 55px !important;
     }
     .lightbox-btn:hover {
         background: rgba(255, 255, 255, 0.3);
@@ -192,8 +196,9 @@
     }
 
     @media (max-width: 768px) {
-    .section .container{
-        margin-left: 3% !important;
+    section .container{
+        margin: 0 auto !important;
+        text-align: center;
     }
     
 .gallery-grid img, 
@@ -206,16 +211,30 @@
     column-count: 2;
     column-gap: 10px; 
     margin-bottom: 30px;
-    width: 93%;
-    margin-left: 0px !important;
-    margin-right: 20px !important;
+    width: 100%;
+    margin: 0 auto !important;
+    max-width: 95%;
 }
 
 .button-group.filter-button-group{
-margin-right: 20px;}
+margin: 0 auto 20px auto !important;
+justify-content: center;
+}
 }
 
-
+@media (max-width: 480px) {
+    .gallery-grid {
+        column-count: 1;
+        width: 100%;
+        margin: 0 auto !important;
+        max-width: 90%;
+    }
+    
+    .button-group.filter-button-group {
+        margin: 0 auto 20px auto !important;
+        justify-content: center;
+    }
+}
 
 </style>
 

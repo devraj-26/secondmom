@@ -184,7 +184,7 @@ app.get('/blogs', async (req, res) => {
       metaDescription: 'Check out ones this top child development center how to they take care,  of the early childhood development of your child at their pre-schooling age',
       metaKeyword:' Second Mom',
       canonicle: currentURL,
-      metaImage: `${req.protocol}://${req.get('Host')}/path-to-logo.jpg`,
+    metaImage: `${baseUrl}/${metaLogoPath}`,
   };
 
   // Pass `posts` correctly to the view
